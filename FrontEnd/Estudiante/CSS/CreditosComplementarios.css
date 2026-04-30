@@ -1,0 +1,244 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#0b2a4a;
+    color:white;
+    position:fixed;
+    padding:25px 20px;
+}
+
+.logo{
+    margin-bottom:40px;
+    letter-spacing:2px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.menu a:hover{
+    background:#1b4f8a;
+    transform:translateX(4px);
+}
+
+.menu .active{
+    background:#1b4f8a;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5f5;
+    font-size: 15px;
+    transition: all 0.25s ease;
+}
+
+/* ICONOS */
+.menu-item i {
+    width: 20px;
+    height: 20px;
+}
+
+/* HOVER elegante (no caricaturesco) */
+.menu-item:hover {
+    background: rgba(56, 189, 248, 0.12);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+
+
+/* BOTONES INFERIORES (Soporte y Guía) */
+.sidebar-bottom .menu-item {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 5px 15px;
+    padding-top: 15px;
+}
+
+/* MAIN */
+.main-content{
+    margin-left:240px;
+    padding:30px;
+    background:#f4f6f9;
+    min-height:100vh;
+}
+
+/* TOPBAR */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    color:#0b2a4a;
+}
+
+.topbar p{
+    color:#6c757d;
+}
+
+.perfil{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:white;
+    padding:10px 15px;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.perfil img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+}
+
+/**/
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* TARJETAS */
+.card-progreso, .card-subida {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* TEXTO */
+.creditos-texto {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.creditos-texto span {
+    font-weight: bold;
+    color: #6a11cb;
+}
+
+/* BARRA */
+.barra {
+    width: 100%;
+    height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progreso {
+    height: 100%;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+/* SUBIDA */
+.info {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+input[type="file"] {
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+/* BOTÓN */
+.btn-enviar {
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn-enviar:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* DETALLE DE CRÉDITOS */
+.card-detalle {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.lista-creditos {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.credito-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+/* TIPOS */
+.credito-item .tipo {
+    font-weight: 500;
+}
+
+/* ESTADO */
+.credito-item .estado {
+    font-size: 14px;
+}
+
+/* COMPLETADO */
+.credito-item.completado {
+    background: #e6f9f0;
+    color: #1b8a5a;
+    border-left: 5px solid #1b8a5a;
+}
+
+/* PENDIENTE */
+.credito-item.pendiente {
+    background: #fff4e6;
+    color: #b76e00;
+    border-left: 5px solid #ff9800;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Kardex | ÁMBAR</title>
+    <link rel="stylesheet" href="../css/Kardex.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="../JS/Kardex.js"></script>
+</head>
+<body>
+
+<!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+<main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
+        <div>
+            <h1 style="color:#0b2a4a; margin:0; font-size: 28px;">Kardex</h1>
+            <p id="kardex-carrera" style="color:#6c757d; margin-top:4px; font-size: 16px;"></p>
+        </div>
+
+        <div class="perfil" style="display:flex; align-items:center; gap:12px; background:white; padding:10px 15px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+            <img id="kardex-foto" src="" alt="Perfil" style="width:45px; height:45px; border-radius:50%; object-fit:cover;">
+            <div>
+                <span class="nombre" id="kardex-nombre" style="display:block; font-weight:bold; color:#0b2a4a; font-size:14px;"></span>
+                <span class="control" id="kardex-control" style="color:#6c757d; font-size:13px;"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENCABEZADO -->
+    <section class="info-general">
+        <h1>Kardex Académico</h1>
+
+        <div class="datos-grid">
+            <div><strong>Especialidad:</strong> <span id="kardex-especialidad"></span></div>
+            <div><strong>Semestre:</strong> <span id="kardex-semestre"></span></div>
+            <div><strong>Situación:</strong> <span class="vigente" id="kardex-situacion"></span></div>
+            <div><strong>Ingreso:</strong> <span id="kardex-ingreso"></span></div>
+            <div><strong>Créditos acumulados:</strong> <span id="kardex-cred-acumulados"></span></div>
+            <div><strong>Créditos totales:</strong> <span id="kardex-cred-totales"></span></div>
+            <div><strong>Porcentaje de avance:</strong> <span id="kardex-porcentaje"></span></div>
+        </div>
+
+        <!-- Barra de avance -->
+        <div class="barra-avance">
+            <div class="progreso" id="kardex-barra-progreso" style="width:0%"></div>
+        </div>
+    </section>
+
+    <!-- LEYENDA -->
+    <section class="leyenda">
+        <span class="tag aprobado">Materia aprobada</span>
+        <span class="tag reprobado">Materia reprobada</span>
+        <span class="tag actual">Carga actual</span>
+        <span class="tag optativa">Materia optativa</span>
+        <span class="tag futura">Materia por cursar</span>
+        <span class="tag invalidada">Materia invalidada</span>
+    </section>
+
+    <!-- LISTA DE MATERIAS -->
+    <!-- MALLA CURRICULAR DINÁMICA -->
+<section class="malla" id="malla-curricular">
+</section>
+
+    <!-- BOTÓN PDF -->
+    <div class="acciones" style="display: flex; justify-content: flex-start; margin-top: 20px;">
+        <button onclick="descargarKardexPDF()" style="background:#0b2a4a; color:white; padding:10px 20px; border:none; border-radius:10px; cursor:pointer; display:flex; gap:8px; font-size:14px; align-items:center;">
+            <i data-lucide="download"></i> Descargar Kardex
+        </button>
+    </div>
+
+</main>
+
+<script defer src="../JS/menu.js"></script>
+
+<script>
+    lucide.createIcons();
+
+    function descargarKardexPDF(){
+        const elemento = document.getElementById("malla-curricular");
+        html2pdf().from(elemento).set({
+            margin: 10,
+            filename: 'Mi_Kardex.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }
+        }).save();
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>

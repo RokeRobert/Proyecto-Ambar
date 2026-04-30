@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Aulas.css">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Aulas</title>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div id="sidebar"></div> 
+
+<main class="main-content">
+    <div id="topbar"></div>
+
+    <div class="aulas-admin">
+        <!-- HEADER -->
+        <div class="page-header">
+        <h2>Gestión de Aulas y Laboratorios</h2>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <select id="plantel" onchange="renderAulas()">
+                <option value="tomas">Tomás Aquino</option>
+                <option value="otay">Otay</option>
+            </select>
+
+            <select id="tipo" onchange="renderAulas()">
+                <option value="aula">Aulas</option>
+                <option value="lab">Laboratorios</option>
+            </select>
+
+            <select id="bloque" onchange="renderAulas()">
+                <option value="">Todos los bloques</option>
+                <option value="100">Bloque 100</option>
+                <option value="200">Bloque 200</option>
+                <option value="300">Bloque 300</option>
+                <option value="500">Bloque 500</option>
+                <option value="600">Bloque 600</option>
+            </select>
+
+            <button class="btn-agregar" onclick="abrirModal()">+ Agregar</button>
+        </div>
+        </div>
+
+        <!-- TABLA -->
+        <table class="tabla-aulas">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Bloque</th>
+                    <th>Capacidad</th>
+                    <th>Plantel</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tabla-body"></tbody>
+        </table>
+
+    </div>
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+
+        <span class="cerrar" onclick="cerrarModal()">×</span>
+
+        <h3>Agregar Aula</h3>
+
+        <input type="text" id="nombre" placeholder="Ej: A101 o Lab A">
+
+        <select id="tipoInput">
+            <option value="aula">Aula</option>
+            <option value="lab">Laboratorio</option>
+        </select>
+
+        <select id="bloqueInput">
+            <option value="100">Bloque 100</option>
+            <option value="200">Bloque 200</option>
+            <option value="300">Bloque 300</option>
+            <option value="500">Bloque 500</option>
+            <option value="600">Bloque 600</option>
+        </select>
+
+        <input type="number" id="capacidad" placeholder="Capacidad">
+
+        <div class="acciones-modal">
+            <button class="btn-guardar" onclick="guardar()">Guardar</button>
+            <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- JS -->
+<script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+<script src="/FrontEnd/JefeDepartamento/JS/Aulas.js"></script>
+
+</body>
+</html>

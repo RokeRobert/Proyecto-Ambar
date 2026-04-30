@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio - AMBAR</title>
+<link rel="stylesheet" href="../CSS/Home.css">
+<script defer src="../JS/Home.js"></script>
+
+<!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+    <main class="contenido-principal">
+        <!-- TOPBAR -->
+        <div class="topbar">
+             <div>
+                <h1>Perfil</h1>
+            </div>
+
+            <div class="acciones-topbar">
+                <button class="btn-secundario"onclick="abrirPassword()">
+                    <i data-lucide="key-round"></i>
+                    Cambiar contraseña
+                </button>
+
+                <button class="logout">
+                    <i data-lucide="log-out"></i>
+                    Cerrar sesión
+                </button>
+            </div>
+        </div>
+        <!--Modal Cerrar sesion-->
+        <div class="modal" id="modalLogout">
+            <div class="modal-contenido">
+                <h3>¿Cerrar sesión?</h3>
+                <p>Se cerrará tu sesión actual.</p>
+
+                <div class="acciones">
+                    <button class="btn cancelar" onclick="cerrarLogout()">Cancelar</button>
+                    <button class="btn peligro" onclick="ejecutarLogout()">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+        <!--Modal Contrasena-->
+        <div class="modal" id="modalPassword">
+            <div class="modal-contenido">
+                <h3>Cambiar contraseña</h3>
+
+                <div class="grupo">
+                    <label>Contraseña actual</label>
+                    <div class="input-pass">
+                        <input type="password" id="actual" placeholder="Contraseña actual">
+                        <i data-lucide="eye" onclick="togglePass('actual', this)"></i>
+                    </div>
+                </div>
+
+                <div class="grupo">
+                    <label>Nueva contraseña</label>
+                    <div class="input-pass">
+                        <input type="password" id="nueva" placeholder="Nueva contraseña">
+                        <i data-lucide="eye" onclick="togglePass('nueva', this)"></i>
+                    </div>
+                </div>
+
+                <div class="grupo">
+                    <label>Confirmar contraseña</label>
+                    <div class="input-pass">
+                        <input type="password" id="confirmar"placeholder="Confirmar Contraseña">
+                        <i data-lucide="eye" onclick="togglePass('confirmar', this)"></i>
+                    </div>
+                </div>
+
+                <div class="acciones">
+                    <button class="btn cancelar" onclick="cerrarPassword()">Cancelar</button>
+                    <button class="btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+    <!-- PERFIL -->
+    <section class="perfil-academico">
+
+    <div class="perfil-header">
+        <div class="avatar-container">
+            <img class="foto-perfil" src="https://i.pinimg.com/736x/cc/ec/06/ccec06bfcef089196f335c17e837b9eb.jpg" id="fotoPerfil">
+
+            <div class="overlay">
+                <button onclick="abrirImagen()">Ver</button>
+            </div>
+        </div>
+
+        <!-- MODAL IMAGEN -->
+        <div class="modal" id="modalImagen">
+            <div class="modal-contenido img-modal">
+                <span class="cerrar" onclick="cerrarImagen()">&times;</span>
+                <img id="imgGrande">
+            </div>
+        </div>
+
+        <div class="info-principal">
+            <h2 id="home-nombre"></h2>
+            <p class="matricula" id="home-matricula"></p>
+            <p class="correo" id="home-correo"></p>
+
+            <span class="estatus" id="home-estatus"></span>
+        </div>
+    </div>
+
+    <div class="perfil-grid">
+
+        <div class="bloque">
+            <h4>Información Académica</h4>
+
+            <div class="fila">
+                <span>Carrera</span>
+                <strong id="home-carrera"></strong>
+            </div>
+
+            <div class="fila">
+                <span>Especialidad</span>
+                <strong id="home-especialidad"></strong>
+            </div>
+
+            <div class="fila">
+                <span>Semestre</span>
+                <strong id="home-semestre"></strong>
+            </div>
+        </div>
+
+        <div class="bloque">
+            <h4>Promedios</h4>
+
+            <div class="fila">
+                <span>Sin reprobadas</span>
+                <strong id="home-prom-sin"></strong>
+            </div>
+
+            <div class="fila">
+                <span>Con reprobadas</span>
+                <strong id="home-prom-con"></strong>
+            </div>
+
+            <div class="fila">
+                <span>Último semestre</span>
+                <strong id="home-prom-ult"></strong>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<div class="contenedor-tabs">
+
+    <!-- TABS -->
+    <div class="tabs-header">
+        <button class="tab active" data-tab="personales">
+            <i data-lucide="user"></i> Datos personales
+        </button>
+
+        <button class="tab" data-tab="academica">
+            <i data-lucide="graduation-cap"></i> Carga académica
+        </button>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="tabs-body">
+
+        <!-- DATOS PERSONALES -->
+        <div class="tab-content active" id="personales">
+            <div class="lista-info">
+
+                <div><i data-lucide="id-card"></i><span>CURP</span><p id="home-curp"></p></div>
+                <div><i data-lucide="phone"></i><span>Teléfono</span><p id="home-telefono"></p></div>
+                <div><i data-lucide="mail"></i><span>Correo</span><p id="home-correo-personal"></p></div>
+                <div><i data-lucide="calendar"></i><span>Nacimiento</span><p id="home-nacimiento"></p></div>
+                <div><i data-lucide="map-pin"></i><span>Ciudad</span><p id="home-ciudad"></p></div>
+                <div><i data-lucide="home"></i><span>Colonia</span><p id="home-colonia"></p></div>
+                <div><i data-lucide="navigation"></i><span>Calle</span><p id="home-calle"></p></div>
+                <div><i data-lucide="mailbox"></i><span>C.P.</span><p id="home-cp"></p></div>
+
+            </div>
+        </div>
+
+        <!-- CARGA ACADÉMICA -->
+        <div class="tab-content" id="academica">
+            <div class="lista-info">
+
+                <div><i data-lucide="calendar-check"></i><span>Fecha</span><p id="home-fecha-carga"></p></div>
+                <div><i data-lucide="clock"></i><span>Hora</span><p id="home-hora-carga"></p></div>
+                <div class="full"><i data-lucide="check-circle"></i><span>Adeudos</span><p class="ok" id="home-adeudos"></p></div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</main>
+
+    <script defer src="../JS/menu.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Horario | ÁMBAR</title>
+    <link rel="stylesheet" href="../css/Horario.css">
+
+    <!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script defer src="../JS/Horario.js"></script>
+</head>
+<body>
+
+   <!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <div>
+                <h1>Horario Escolar</h1>
+                <p id="horario-carrera"></p>
+            </div>
+
+            <div class="perfil">
+                <img id="horario-foto" src="" alt="Perfil">
+                <div>
+                    <span class="nombre" id="horario-nombre"></span>
+                    <span class="control" id="horario-control"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card contenedor -->
+        <section class="horario-card">
+            <h2>Horario Semestral</h2>
+
+            <div class="acciones-horario">
+                <button class="btn-descargar" onclick="descargarHorarioPDF()">
+                    <i data-lucide="download"></i>
+                    Descargar horario
+                </button>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="tabla-horario">
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Lunes</th>
+                            <th>Martes</th>
+                            <th>Miércoles</th>
+                            <th>Jueves</th>
+                            <th>Viernes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-horario">
+                        <!-- Se genera dinámicamente con JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script defer src="../JS/menu.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <script>
+        async function descargarHorarioPDF(){
+            const { jsPDF } = window.jspdf;
+            // SOLO la tabla
+            const tabla = document.querySelector(".tabla-contenedor");
+            const canvas = await html2canvas(tabla, {
+                scale: 2,
+                useCORS: true
+            });
+
+            const imgData = canvas.toDataURL("image/png");
+
+            const pdf = new jsPDF("p", "mm", "a4");
+
+            const pageWidth = 210;
+            const pageHeight = 297;
+
+            const margin = 10;
+
+            const imgWidth = pageWidth - (margin * 2);
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+
+            let heightLeft = imgHeight;
+            let position = margin;
+
+            // Primera página
+            pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // Páginas extra si es largo
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight + margin;
+                pdf.addPage();
+                pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save("Horario.pdf");
+        }
+    </script>   
+</body>
+</html>

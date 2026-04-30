@@ -1,0 +1,104 @@
+.dashboard h2{
+    margin-bottom:20px;
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:20px;
+    margin-bottom:25px;
+}
+
+/* CARDS */
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.card i{
+    width:30px;
+    height:30px;
+    color:#0b2a4a;
+}
+
+.card h3{
+    margin:0;
+}
+
+.card p{
+    margin:0;
+    color:#6c757d;
+}
+
+.alerta{
+    border-left:5px solid #dc2626;
+}
+
+/* GRÁFICAS */
+.graficas{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.grafica-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.grafica-card canvas{
+    max-height:250px;
+}
+
+/* ACTIVIDAD */
+.actividad{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.actividad ul{
+    list-style:none;
+    padding:0;
+}
+
+.actividad li{
+    padding:10px;
+    border-bottom:1px solid #eee;
+    font-size:14px;
+}
+/*FILTROS*/
+/* FILTROS */
+.filtros-globales{
+    margin-bottom:20px;
+}
+
+.filtros-globales select{
+    padding:10px 15px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    background:white;
+    cursor:pointer;
+    font-size:14px;
+}
+
+/* HOVER BONITO EN CARDS */
+.card:hover{
+    transform: translateY(-5px);
+    transition:0.3s;
+}
+
+/* GRÁFICAS MÁS PRO */
+.grafica-card canvas{
+    max-height:260px;
+}

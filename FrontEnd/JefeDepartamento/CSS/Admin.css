@@ -1,0 +1,154 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    display:flex;
+    background:#f4f6f9;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:240px;
+    height:100vh;
+    background:#0b2a4a;
+    color:white;
+    padding:20px;
+    position:fixed;
+    display:flex;
+    flex-direction:column;
+}
+
+/* LOGO */
+.logo{
+    margin-bottom:30px;
+    font-size:20px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+/* MENU */
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+/* LINKS */
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px 14px;
+    border-radius:10px;
+
+    text-decoration:none;   
+    color:#cbd5f5;        
+
+    transition: all 0.25s ease;
+}
+
+/* ICONOS */
+.menu a i{
+    width:20px;
+    height:20px;
+}
+
+/* HOVER */
+.menu a:hover{
+    background:#1b4f8a;
+    color:white;
+    transform:translateX(4px);
+}
+
+/* LINK ACTIVO */
+.menu a.active{
+    background:#1b4f8a;
+    color:white;
+}
+
+/* EVITAR MORADO VISITADO */
+.menu a:visited{
+    color:#cbd5f5;
+}
+/* MAIN */
+.main-content{
+    margin-left:240px;
+    width:100%;
+    padding:20px;
+}
+
+/* TOPBAR */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+/* FONDO GENERAL */
+body{
+    background: #f1f5f9; /* gris suave bonito */
+}
+
+/* MAIN */
+.main-content{
+    margin-left:240px;
+    padding:25px;
+}
+
+/* TOPBAR */
+#topbar{
+    background:white;
+    padding:15px 25px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom:20px;
+}
+
+/* DERECHA */
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+/* PERFIL */
+.perfil{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* TEXTO PERFIL */
+.perfil .info{
+    display:flex;
+    flex-direction:column;
+    text-align:right;
+}
+
+.perfil .nombre{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.perfil small{
+    font-size:12px;
+    color:#777;
+}
+
+/* AVATAR */
+.avatar{
+    width:35px;
+    height:35px;
+    background:#0b2a4a;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}

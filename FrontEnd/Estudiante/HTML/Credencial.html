@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credencial - AMBAR</title>
+    <link rel="stylesheet" href="../CSS/Credencial.css">
+    <!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="../JS/Credencial.js"></script>
+</head>
+<body>
+
+<!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+<div class="contenedor">
+
+        <h2>Credencial </h2>
+
+    <!-- CONTENEDOR PDF -->
+    <div id="credencialPDF">
+
+        <!-- FRENTE -->
+        <div class="credencial frente">
+
+            <div class="header">
+                <span>ÁMBAR - IDENTIFICACIÓN ESTUDIANTIL</span>
+                <span class="folio" id="cred-folio"></span>
+            </div>
+
+            <div class="contenido">
+
+                <div class="foto-box">
+                    <img class="foto-box" id="cred-foto" src="" alt="Foto de credencial">
+                </div>
+
+                <div class="datos">
+                    <p><b>Nombre:</b> <span id="cred-nombre"></span></p>
+                    <p><b>Fecha Nac.:</b> <span id="cred-nacimiento"></span></p>
+                    <p><b>Carrera:</b> <span id="cred-carrera"></span></p>
+                    <p><b>Semestre:</b> <span id="cred-semestre"></span></p>
+                    <p><b>Vigencia:</b> <span id="cred-vigencia"></span></p>
+
+                    <div class="firma">Firma</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- REVERSO -->
+        <div class="credencial reverso">
+
+            <div class="header">
+                <span>ÁMBAR - IDENTIFICACIÓN ESTUDIANTIL</span>
+            </div>
+
+            <div class="contenido-reverso">
+
+                <div class="sello">
+                    <img class="sello" src="https://sic.cultura.gob.mx/imagenes_cache/universidad_1345_g_73652.png">
+                </div>
+
+                <div class="info-reverso">
+                    <h2>CLASE 2026</h2>
+                    <p>INSTITUTO TECNOLÓGICO  DE TIJUANA </p>
+                    <p>Uso oficial del estudiante</p>
+
+                    <div class="firma">Firma</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOTÓN PDF -->
+    <button onclick="descargarPDF()" class="btn-pdf">
+        <i data-lucide="download"></i> Descargar PDF
+    </button>
+
+</div>
+
+<script defer src="../JS/menu.js"></script>
+
+<!-- LIBRERÍA -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+lucide.createIcons();
+
+function descargarPDF(){
+    const elemento = document.getElementById("credencialPDF");
+
+    html2pdf().from(elemento).set({
+        margin: 5,
+        filename: 'credencial_ambar.pdf',
+        html2canvas: { scale: 3 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    }).save();
+}
+</script>
+</body>
+</html>

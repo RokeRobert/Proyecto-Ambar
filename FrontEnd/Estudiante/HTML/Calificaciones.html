@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calificaciones | ÁMBAR</title>
+<link rel="stylesheet" href="../CSS/Calificaciones.css">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script defer src="../JS/Calificaciones.js"></script>
+</head>
+<body>
+
+<!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+<!-- CONTENIDO -->
+<main class="main-content">
+
+<!-- TOPBAR (SIN CAMBIOS) -->
+<div class="topbar">
+    <div>
+        <h1>Calificaciones</h1>
+        <p id="topbar-carrera"></p>
+    </div>
+
+    <div class="perfil">
+        <img id="topbar-foto" src="" alt="Perfil">
+        <div>
+            <span class="nombre" id="topbar-nombre"></span>
+            <span class="control" id="topbar-control"></span>
+        </div>
+    </div>
+</div>
+
+<!-- RESUMEN -->
+<section class="resumen">
+    <div class="card-resumen">
+        <h4>Promedio Semestral</h4>
+        <p class="numero" id="resumen-promedio"></p>
+    </div>
+
+    <div class="card-resumen">
+        <h4>Materias Aprobadas</h4>
+        <p class="numero verde" id="resumen-aprobadas"></p>
+    </div>
+
+    <div class="card-resumen">
+        <h4>Materias Reprobadas</h4>
+        <p class="numero rojo" id="resumen-reprobadas"></p>
+    </div>
+</section>
+    <h2>Detalle de Materias</h2>
+    <!-- BOTÓN PDF -->
+    <div class="acciones">
+        <button class="boton-pdf" onclick="descargarPDF()">
+            <i data-lucide="download"></i> Descargar boleta PDF
+        </button>
+    </div>
+
+<!-- CONTENEDOR MATERIAS -->
+<section class="contenedor-materias" id="boleta">
+</section>
+
+</main>
+
+<script defer src="../JS/menu.js"></script>
+
+<script>
+lucide.createIcons();
+function descargarPDF(){
+    const elemento = document.getElementById("boleta");
+
+    html2pdf().from(elemento).set({
+        margin: 10,
+        filename: 'boleta.pdf',
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).save();
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+
+</body>
+</html>

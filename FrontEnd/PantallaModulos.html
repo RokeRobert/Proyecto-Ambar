@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMBAR Tijuana</title>
+
+<link rel="stylesheet" href="/FrontEnd/PantallaModulos.css">
+
+<!-- Iconos -->
+<script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="barra-superior">
+    <div class="logo">
+        <span class="marca">AMBAR</span>
+    </div>
+
+    <div class="usuario">
+        <span>Invitado</span>
+        <i data-lucide="user"></i>
+    </div>
+</header>
+
+<!-- CONTENIDO -->
+<main class="contenedor-modulos">
+
+    <!-- TARJETA PRINCIPAL -->
+    <a href="/FrontEnd/Estudiante/HTML/Login.html" class="enlace-tarjeta">
+        <div class="tarjeta-modulo principal">
+            <div class="icono-contenedor">
+                <i data-lucide="graduation-cap"></i>
+            </div>
+
+            <h2>AMBAR Estudiantes</h2>
+            <p>Consultas, kardex, horarios y servicios escolares</p>
+
+            <button class="boton">Ingresar</button>
+        </div>
+    </a>
+
+    <h4 class="titulo-seccion">Otros módulos</h4>
+
+    <!-- GRID -->
+    <div class="grid-modulos">
+
+        <a href="#" class="enlace-tarjeta">
+            <div class="tarjeta-modulo">
+                <div class="icono-contenedor azul">
+                    <i data-lucide="users"></i>
+                </div>
+
+                <h3>AMBAR Docentes</h3>
+                <p>Gestión académica y actividades docentes</p>
+            </div>
+        </a>
+
+        <a href="/FrontEnd/Estudiante/HTML/ReferenciaBancaria.html" class="enlace-tarjeta">
+            <div class="tarjeta-modulo">
+                <div class="icono-contenedor dorado">
+                    <i data-lucide="receipt"></i>
+                </div>
+
+                <h3>AMBAR Recibos</h3>
+                <p>Consulta y generación de recibos oficiales</p>
+            </div>
+        </a>
+
+    </div>
+
+</main>
+
+<script>
+lucide.createIcons();
+</script>
+
+</body>
+</html>

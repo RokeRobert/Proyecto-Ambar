@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+:root {
+    --azul-obscuro: #1a237e;
+    --azul-medio: #3949ab;
+    --blanco: #ffffff;
+    --gris-fondo: #f8fafd; 
+    --texto-principal: #2c3e50;
+    --texto-secundario: #64748b;
+    --borde: #e2e8f0;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08); 
+    --transicion: all 0.3s ease;
+}
+
+
+/* Contenedor Principal */
+.perfil-container-content {
+    padding: 30px;
+    width: 96%;
+    max-width: 3000px;
+    margin: 0 auto;
+}
+
+.perfil-flex-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Tarjeta Izquierda (Perfil) */
+.card-usuario { 
+    flex: 0 0 400px;
+    background: var(--blanco);
+    padding: 40px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--borde);
+}
+
+.foto-perfil {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #f0f2f5;
+    cursor: pointer;
+}
+
+.foto-perfil img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Tarjetas Derecha (Detalles) */
+.detalles-perfil { 
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Tarjetas: contenido centrado de forma compacta */
+.card {
+    width: 100%;
+    background: var(--blanco);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el bloque de contenido */
+}
+/* Títulos y Texto */
+h2 
+{ 
+    color: var(--azul-obscuro); 
+    margin-bottom: 5px; font-size: 2rem; 
+}
+/* Títulos centrados */
+h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    color: var(--azul-medio);
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 10px;
+}
+/* Contenedor de seguridad específico */
+.seguridad-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+/* Estilo para el checkbox centrado */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5px;
+    color: var(--texto-secundario);
+    font-size: 0.9rem;
+}
+/* Inputs Estilizados */
+/* Un contenedor con ancho máximo */
+.form-container, .seguridad-container {
+    width: 100%;
+    max-width: 450px; /* Evita que los inputs se estiren demasiado */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* Ajuste para que los inputs no se estiren demasiado al estar centrados */
+.form-group {
+
+    width: 100%;
+    text-align: left;
+}
+
+.form-group label 
+{ 
+    display: block; 
+    font-size: 0.85rem; 
+    color: var(--texto-secundario); 
+    margin-bottom: 5px; font-weight: 600; 
+}
+
+input[readonly], input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background: #fbfcfe;
+    font-size: 0.9rem;
+    box-sizing: border-box; /* Asegura que el padding no desborde el ancho */
+}
+
+/* --- SECCIÓN DE BOTONES CORREGIDA --- */
+/* Contenedor para centrar botones en el modal */
+.modal-footer {
+    display: flex;
+    justify-content: center; 
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-primario { 
+    background: var(--azul-obscuro); 
+    color: white; 
+    border: none; 
+    padding: 12px 25px; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-weight: 600; 
+    transition: var(--transicion);
+}
+
+.btn-primario:hover {
+    background: var(--azul-medio);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 35, 126, 0.2);
+}
+
+/* Botón Cancelar */
+.btn-secundario-style {
+    background: transparent;
+    color: var(--texto-secundario);
+    border: 1px solid var(--borde);
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transicion);
+}
+
+.btn-secundario-style:hover {
+    background: #f1f5f9;
+    color: var(--azul-obscuro);
+    border-color: var(--texto-secundario);
+}
+
+.btn-subir-foto { 
+    background: #f0f2f5; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 20px; 
+    cursor: pointer; 
+    font-size: 0.85rem; 
+    margin-bottom: 15px;
+    transition: var(--transicion);
+}
+
+.btn-subir-foto:hover { background: #e2e8f0; }
+
+/* Modales */
+.modal {
+    display: none; 
+    position: fixed; 
+    inset: 0;
+    background: rgba(0,0,0,0.5); 
+    backdrop-filter: blur(4px);
+    z-index: 9999; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .perfil-flex-container { flex-direction: column; align-items: center; }
+    .card-usuario { width: 100%; flex: none; }
+}

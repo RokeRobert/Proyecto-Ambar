@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recibos - AMBAR</title>
+
+    <link rel="stylesheet" href="../CSS/Recibo.css">
+    <!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="../JS/Recibos.js"></script>
+</head>
+<body>
+
+    <!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+
+    <main class="contenido-principal">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div>
+            <h1>Recibos</h1>
+            <p id="recibos-carrera"></p>
+        </div>
+    </div>
+
+    <!-- RECIBO ACTUAL -->
+    <section class="recibo-actual">
+
+        <div class="info-recibo">
+            <h2 id="recibo-actual-titulo"></h2>
+
+            <p><strong>Emisión:</strong> <span id="recibo-actual-emision"></span></p>
+            <p><strong>Vigencia:</strong> <span id="recibo-actual-vigencia"></span></p>
+
+            <div class="monto" id="recibo-actual-monto"></div>
+
+            <div id="recibo-actual-estado" class="estado">
+                <!-- Generado dinámicamente -->
+            </div>
+
+            <button class="btn-descargar" onclick="descargarRecibo()">
+                <i data-lucide="download"></i> Referencia de Pago 
+            </button>
+        </div>
+
+    </section>
+
+   
+
+    <!-- HISTÓRICO -->
+    <section class="historial">
+
+        <h3>Histórico de recibos</h3>
+
+        <!-- ENCABEZADOS -->
+        <div class="encabezado-recibos">
+            <span>Descripción</span>
+            <span>Periodo</span>
+            <span>Importe</span>
+            <span>Estado</span>
+        </div>
+
+        <!-- LISTA -->
+        <div class="lista-recibos" id="historial-recibos">
+            <!-- Se genera dinámicamente -->
+        </div>
+
+    </section>
+
+</main>
+
+    <script defer src="../JS/menu.js"></script>
+
+     <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

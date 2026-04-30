@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Guia - AMBAR</title>
+
+    <link rel="stylesheet" href="../CSS/Guia.css">
+    <!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+    <main class="contenido-principal">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div>
+                <h1>Guía de uso</h1>
+                <p>Carga de materias</p>
+            </div>
+        </div>
+
+        <!-- CONTENEDOR -->
+        <section class="contenedor-video">
+
+            <div class="tarjeta-video">
+
+                <h2>¿Cómo realizar tu carga académica?</h2>
+
+                <p class="descripcion-video">
+                    En este video aprenderás paso a paso cómo seleccionar materias, evitar choques de horario y completar tu carga correctamente.
+                </p>
+
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/IRgCO2UIJ6w"
+                        title="Carga de materias"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <!-- INFO RÁPIDA -->
+                <div class="info-extra">
+                    <div class="item-info">
+                         Duración: 2:31 min
+                    </div>
+                    <div class="item-info">
+                         Recomendado antes de inscribirte
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+    
+    <script defer src="../JS/menu.js"></script>
+     <script>
+        lucide.createIcons();
+    </script>
+    
+</body>
+</html>

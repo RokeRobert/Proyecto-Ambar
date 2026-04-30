@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tickets - AMBAR</title>
+
+    <link rel="stylesheet" href="../CSS/Tickets.css">
+    <!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="../JS/Tickets.js"></script>
+</head>
+<body>
+
+    <!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+    <main class="contenido-principal">
+
+    <div class="topbar">
+        <div>
+            <h1>Tickets</h1>
+            <p id="topbar-carrera" style="color: #6c757d; margin-top: 4px; font-size: 14px;"></p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="perfil" style="display:flex; align-items:center; gap:12px; background:white; padding:8px 15px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                <img id="topbar-foto" src="" alt="Perfil" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                <div>
+                    <span class="nombre" id="topbar-nombre" style="display:block; font-weight:bold; color:#0b2a4a; font-size:14px;"></span>
+                    <span class="control" id="topbar-control" style="color:#6c757d; font-size:13px;"></span>
+                </div>
+            </div>
+
+        <button class="btn-principal" id="btnAbrirModal">
+            <i data-lucide="plus"></i>
+            Generar ticket
+        </button>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab activa">Abiertos</button>
+        <button class="tab">Finalizados</button>
+    </div>
+
+    <!-- LISTA -->
+    <div class="lista-tickets" id="contenedor-tickets">
+        <!-- Los tickets se insertarán dinámicamente aquí -->
+    </div>
+
+    <!-- MODAL -->
+<div class="modal" id="modalTicket">
+
+    <div class="modal-contenido">
+
+        <div class="modal-header">
+            <h2>Generación de ticket</h2>
+            <button class="cerrar" id="cerrarModal">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <label>Asunto</label>
+            <input type="text" id="tipoTicket" placeholder="Ej. Problema con mi carga de materias..." style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border: 1px solid #cbd5e1; background: #f8fafc; font-family: 'Poppins', sans-serif;">
+
+
+            <label>Observaciones</label>
+            <textarea id="observaciones" class="input" placeholder="Describe tu problema..."></textarea>
+
+            <label>Evidencia</label>
+            <input type="file" id="evidencia" class="input" accept="image/*" onchange="mostrarImagen(event)">
+
+            <img id="preview" style="margin-top:10px; max-width:50%; display:none;">
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" id="btnCancelar">Cerrar</button>
+            <button class="btn-confirmar" id="btnConfirmar">Confirmar</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+</main>
+
+    <script defer src="../JS/menu.js"></script>
+
+     <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#0b2a4a;
+    color:white;
+    position:fixed;
+    padding:25px 20px;
+}
+
+.logo{
+    margin-bottom:40px;
+    letter-spacing:2px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.menu a:hover{
+    background:#1b4f8a;
+    transform:translateX(4px);
+}
+
+.menu .active{
+    background:#1b4f8a;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5f5;
+    font-size: 15px;
+    transition: all 0.25s ease;
+}
+
+/* ICONOS */
+.menu-item i {
+    width: 20px;
+    height: 20px;
+}
+
+/* HOVER elegante (no caricaturesco) */
+.menu-item:hover {
+    background: rgba(56, 189, 248, 0.12);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+
+/* BOTONES INFERIORES (Soporte y Guía) */
+.sidebar-bottom .menu-item {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 5px 15px;
+    padding-top: 15px;
+}
+
+
+/* Main */
+.main-content{
+    margin-left: 240px;
+    padding: 30px;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* Topbar */
+.topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topbar h1{
+    color: #0b2a4a;
+}
+
+.topbar p{
+    color: #6c757d;
+    margin-top: 4px;
+}
+
+.perfil{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.perfil img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+/* CONTENEDOR */
+.contenedor{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:40px;
+    gap:20px;
+}
+
+/* TARJETA */
+.credencial{
+    width:550px;
+    height:260px;
+    background:#e5e7eb;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+/* HEADER */
+.header{
+    background:#1e293b;
+    color:white;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    font-weight:600;
+}
+
+/* CONTENIDO */
+.contenido{
+    display:flex;
+    padding:20px;
+    gap:25px;
+}
+
+/* FOTO */
+.foto-box{
+    width:140px;
+    height:160px;
+    background:#4f5fa3;
+    border-radius:10px;
+}
+
+/* DATOS */
+.datos{
+    flex:1;
+}
+
+.datos p{
+    margin:10px 0;
+    border-bottom:2px dotted #000;
+    padding-bottom:5px;
+}
+
+/* FIRMA */
+.firma{
+    margin-top:25px;
+    border-top:2px solid #000;
+    width:200px;
+}
+
+/* REVERSO */
+.contenido-reverso{
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    height:100%;
+}
+
+/* SELLO */
+.sello{
+    width:140px;
+    height:140px;
+    border:2px solid #000;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:.8;
+}
+
+/* INFO REVERSO */
+.info-reverso{
+    text-align:center;
+}
+
+.info-reverso h2{
+    margin-bottom:10px;
+}
+
+/* BOTÓN */
+.btn-pdf{
+    padding:12px 25px;
+    border:none;
+    border-radius:10px;
+    background:#0b2a4a;
+    color:white;
+    cursor:pointer;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.btn-pdf:hover{
+    background:#123d75;
+}

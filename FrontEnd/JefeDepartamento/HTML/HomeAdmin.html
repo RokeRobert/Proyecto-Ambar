@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | ÁMBAR</title>
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Home.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="sidebar"></div>
+<main class="main-content">
+    <div id="topbar"></div>
+    <div class="dashboard">
+
+    <!-- FILTROS GLOBALES -->
+<div class="filtros-globales">
+    <select id="filtroCarrera" onchange="filtrarDashboard()">
+        <option value="todas">Todas las carreras</option>
+        <option value="info">Ingeniería Informática</option>
+        <option value="ind">Ingeniería Industrial</option>
+    </select>
+</div>
+
+    <!-- CARDS -->
+    <div class="grid">
+
+        <div class="card">
+            <i data-lucide="users"></i>
+            <div>
+                <h3 id="totalAlumnos">0</h3>
+                <p>Alumnos</p>
+            </div>
+        </div>
+
+        <div class="card alerta">
+            <i data-lucide="credit-card"></i>
+            <div>
+                <h3 id="pagosPendientes">0</h3>
+                <p>Pagos pendientes</p>
+            </div>
+        </div>
+
+        <div class="card alerta">
+            <i data-lucide="award"></i>
+            <div>
+                <h3 id="creditosPendientes">0</h3>
+                <p>Créditos por validar</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <i data-lucide="ticket"></i>
+            <div>
+                <h3 id="tickets">0</h3>
+                <p>Tickets abiertos</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- GRÁFICAS -->
+    <div class="graficas">
+
+        <div class="grafica-card">
+            <h3>Estado de Pagos</h3>
+            <canvas id="graficaPagos"></canvas>
+        </div>
+
+        <div class="grafica-card">
+            <h3>Créditos Complementarios</h3>
+            <canvas id="graficaCreditos"></canvas>
+        </div>
+
+    </div>
+</div>
+</main>
+<script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+<script src="/FrontEnd/JefeDepartamento/JS/Home.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

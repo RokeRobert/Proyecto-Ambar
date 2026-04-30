@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Referencia de Pago | ÁMBAR</title>
+    <link rel="stylesheet" href="../CSS/ReferenciaBancaria.css">
+    <script defer src="../JS/Recibos.js"></script>
+</head>
+<body>
+
+<div class="contenedor">
+
+    <div class="card">
+        <h1>Consulta de Referencia de Pago</h1>
+        <p class="subtitulo">
+            Ingresa tu número de control para visualizar tu referencia de pago.
+        </p>
+
+        <input type="text" id="control" placeholder="Ej. 22211863">
+
+        <button onclick="buscarReferencia()">Consultar</button>
+
+        <!-- RESULTADO -->
+        <div id="resultado" class="resultado oculto">
+            <h2>Referencia encontrada</h2>
+            <p><strong>Número de control:</strong> <span id="resControl"></span></p>
+            <p><strong>Referencia de pago:</strong> <span id="resReferencia"></span></p>
+            <p><strong>Monto:</strong> <span id="resMonto"></span></p>
+            <p><strong>Concepto:</strong> <span id="resConcepto"></span></p>
+        </div>
+
+        <!-- ERROR -->
+        <p id="error" class="error oculto">Número de control no válido</p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

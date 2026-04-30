@@ -1,0 +1,90 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg, #0b2a4a, #1b4f8a);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* CONTENEDOR */
+.contenedor{
+    width:100%;
+    max-width:400px;
+    padding:20px;
+}
+
+/* TARJETA */
+.card{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+/* TEXTOS */
+h1{
+    margin-bottom:10px;
+    color:#0b2a4a;
+}
+
+.subtitulo{
+    font-size:14px;
+    color:#555;
+    margin-bottom:20px;
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:15px;
+    font-size:15px;
+}
+
+/* BOTÓN */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#0b2a4a;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1b4f8a;
+}
+
+/* RESULTADO */
+.resultado{
+    margin-top:20px;
+    background:#f4f6f9;
+    padding:15px;
+    border-radius:10px;
+    text-align:left;
+}
+
+/* ERROR */
+.error{
+    margin-top:15px;
+    color:red;
+    font-size:14px;
+}
+
+/* OCULTO */
+.oculto{
+    display:none;
+}

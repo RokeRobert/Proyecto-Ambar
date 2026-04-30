@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login AMBAR</title>
+<link rel="stylesheet" href="../CSS/Login.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script defer src="../JS/Login.js"></script>
+</head>
+<body>
+
+<!-- Ondas de fondo -->
+<div class="onda"></div>
+<div class="onda onda2"></div>
+
+<div class="contenedor-login">
+    <div class="tarjeta-login">
+
+        <h2><i data-lucide="graduation-cap"></i> AMBAR</h2>
+        <p class="subtitulo">Sistema Escolar Universitario</p>
+
+        <form id="loginForm">
+
+            <div class="grupo-input">
+                <label>Número de Control</label>
+                <div class="input-icono">
+                    <i data-lucide="id-card"></i>
+                    <input type="text" id="control" placeholder="Ej. 22211863" required>
+                </div>
+            </div>
+
+            <div class="grupo-input">
+                <label>Contraseña</label>
+                <div class="input-icono">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <span onclick="togglePassword()">
+                        <i data-lucide="eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <!-- MENSAJE DE ERROR -->
+            <p id="error-msg" style="color: #dc2626; font-size: 14px; text-align: center; display: none; margin-bottom: 15px; font-weight: 500;">Número de control o contraseña incorrectos.</p>
+
+            <button type="submit" class="boton-login">
+                <i></i> Iniciar sesión
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+function togglePassword(){
+    const input = document.getElementById("password");
+    input.type = input.type === "password" ? "text" : "password";
+}
+lucide.createIcons();
+</script>
+
+</body>
+</html>

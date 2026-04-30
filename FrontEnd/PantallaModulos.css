@@ -1,0 +1,218 @@
+:root{
+  --azul:#0b2e59;
+  --azul-sec:#1e4d8f;
+  --acento:#2f7df6;
+  --gris:#64748b;
+}
+
+/* ===== BODY ===== */
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:linear-gradient(180deg, #eef2f7, #f8fafc);
+    color:#1e293b;
+}
+
+/* ===== TOPBAR ===== */
+.barra-superior{
+    background:var(--azul);
+    padding:18px 40px;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.marca{
+    font-size:20px;
+    font-weight:600;
+}
+
+.usuario{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+    opacity:.9;
+    font-weight:700;
+}
+
+.usuario i{
+    width:18px;
+}
+
+/* ===== CONTENEDOR ===== */
+.contenedor-modulos{
+    max-width:1100px;
+    margin:60px auto;
+    padding:20px;
+}
+
+/* ===== ENLACE ===== */
+.enlace-tarjeta{
+    text-decoration:none;
+    color:inherit;
+    display:block;
+}
+
+/* ===== TARJETAS ===== */
+.tarjeta-modulo{
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    transition:all .3s ease;
+    border:1px solid transparent;
+    cursor:pointer;
+    animation:aparecer .6s ease;
+
+    text-align:center; /* 🔥 centrado general */
+}
+
+.tarjeta-modulo:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    border-color:#dbeafe;
+    background:linear-gradient(135deg, #ffffff, #f0f6ff);
+}
+
+/* ===== PRINCIPAL ===== */
+.principal{
+    margin-bottom:30px;
+    padding:45px;
+    background:linear-gradient(135deg, #ffffff, #f8fbff);
+}
+
+/* ===== GRID ===== */
+.grid-modulos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+/* ===== ICONOS ===== */
+.icono-contenedor{
+    width:85px;
+    height:85px;
+    border-radius:20px;
+    background:linear-gradient(135deg, #e0ecff, #f0f6ff);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin:0 auto 20px; /* 🔥 centrado */
+    transition:.3s;
+}
+
+.icono-contenedor i{
+    width:40px;
+    height:40px;
+    stroke-width:2.2;
+    color:var(--azul-sec);
+}
+
+/* COLORES */
+.azul{ background:#e0ecff; }
+.dorado{ background:#fff4db; }
+
+/* ICONO MÁS GRANDE EN PRINCIPAL */
+.principal .icono-contenedor{
+    width:100px;
+    height:100px;
+}
+
+.principal .icono-contenedor i{
+    width:50px;
+    height:50px;
+}
+
+/* HOVER ICONO */
+.tarjeta-modulo:hover .icono-contenedor{
+    transform:scale(1.08);
+}
+
+/* ===== TEXTOS ===== */
+.tarjeta-modulo h2{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.tarjeta-modulo h3{
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.tarjeta-modulo p{
+    font-size:14px;
+    color:var(--gris);
+}
+
+/* ===== BOTÓN ===== */
+.boton{
+    margin-top:18px;
+    padding:12px 30px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg, var(--azul), var(--acento));
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.boton:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+.boton:active{
+    transform:scale(0.97);
+}
+
+/* ===== SECCIÓN ===== */
+.titulo-seccion{
+    font-size:20px;
+    color:var(--gris);
+    margin:10px 0 15px;
+    font-weight:700;
+}
+
+/* ===== ANIMACIÓN ===== */
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+    .grid-modulos{
+        grid-template-columns:1fr;
+    }
+
+    .contenedor-modulos{
+        margin:30px auto;
+    }
+}
+
+@media(max-width:500px){
+    .tarjeta-modulo{
+        padding:25px;
+    }
+
+    .barra-superior{
+        padding:15px 20px;
+    }
+
+    .marca{
+        font-size:18px;
+    }
+}

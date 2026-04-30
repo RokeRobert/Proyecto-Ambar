@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Recibo.css">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Recibos</title>
+</head>
+<body>
+    <div id="sidebar"></div>
+    <main class="main-content">
+        <div id="topbar"></div>
+        <div class="recibos-admin">
+            <!-- HEADER PRO -->
+        <div class="page-header">
+            <div>
+                <h2>Control de Pagos</h2>
+            </div>
+       
+            <!-- FILTROS -->
+            <div class="filtros">
+                <select id="filtroCarrera">
+                    <option value="">Carrera</option>
+                    <option value="info">Ingeniería Informática</option>
+                    <option value="ind">Industrial</option>
+                </select>
+
+                <select id="filtroSemestre">
+                    <option value="">Semestre</option>
+                    <option value="1">1°</option>
+                    <option value="2">2°</option>
+                    <option value="3">3°</option>
+                </select>
+
+                <button class="btn-filtrar" onclick="filtrar()">Filtrar</button>
+
+                <input type="text" id="busqueda" placeholder="Buscar por número de control">
+            </div>
+             </div>
+
+            <!-- RESUMEN -->
+            <div class="resumen">
+                <div class="card pagados">✔ Pagados: 0</div>
+                <div class="card pendientes">✖ Pendientes: 0</div>
+            </div>
+
+            <!-- TABLA -->
+            <table class="tabla-recibos">
+                <thead>
+                    <tr>
+                        <th>No. Control</th>
+                        <th>Referencia</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabla-body">
+                    <!-- AQUÍ SE LLENA DESDE JS -->
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+
+<script src="/FrontEnd/JefeDepartamento/JS/Recibos.js"></script>
+<script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+</body>
+</html>

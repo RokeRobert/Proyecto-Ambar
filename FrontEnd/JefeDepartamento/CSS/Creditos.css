@@ -1,0 +1,209 @@
+body{ 
+    background:#f4f6fb;
+    font-family:'Segoe UI', sans-serif;
+}
+
+/* CONTENIDO */
+.main-content{
+    margin-left:240px;
+    padding:30px;
+}
+
+.creditos-admin{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
+/* SEPARADOR VISUAL */
+.creditos-admin::before{
+    content:"";
+    display:block;
+    width:50px;
+    height:4px;
+    background:#0b2a4a;
+    border-radius:5px;
+    margin-bottom:10px;
+}
+
+/* HEADER */
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.page-header h2{
+    font-size:22px;
+    margin-bottom:15px;
+    color:#0b2a4a;
+}
+
+
+/* TABS */
+.tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+}
+.tab{
+    padding:10px 18px;
+    border:none;
+    background:#e5e7eb;
+    border-radius:8px;
+    cursor:pointer;
+}
+.tab.active{
+    background:#0b2a4a;
+    color:white;
+}
+ 
+/* FILTROS */
+.filtros{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    background:#eef2f8;
+    padding:15px;
+    border-radius:12px;
+}
+
+select,input{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+.btn-filtrar{
+    background:#0b2a4a;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+/* TABLA */
+.tabla{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    margin-top:10px;
+
+}
+
+.tabla tr:hover{
+    background:#f9fafb;
+}
+
+.tabla th{
+    background:#f5f7fa;
+    padding:12px;
+    text-align:left;
+}
+
+.tabla td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+
+/* BADGE */
+.badge{
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.acciones-col{
+    text-align:center;
+}
+
+.pendiente{background:#fef9c3;}
+.aprobado{background:#dcfce7;}
+.rechazado{background:#fee2e2;}
+
+/* BOTONES ICONO */
+.btn-icon{
+    border:none;
+    background:#f1f5f9;
+    padding:8px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:0 2px;
+    transition:.2s;
+}
+.btn-icon:hover{
+    transform:scale(1.1);
+}
+.ver{ color:#2563eb; }
+.aprobar{ color:#16a34a; }
+.rechazar{ color:#dc2626; }
+
+/* PAGINACIÓN */
+.paginacion{
+    margin-top:15px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+.paginacion button{
+    padding:8px 12px;
+    border:none;
+    background:#0b2a4a;
+    color:white;
+    border-radius:6px;
+}
+
+/* MODAL PDF  */
+.modal-pdf{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.8);
+}
+.modal-pdf-content{
+    width:85%;
+    height:85%;
+    background:white;
+    border-radius:12px;
+    position:relative;
+    display:flex;
+}
+.modal-pdf iframe{
+    width:100%;
+    height:100%;
+    border:none;
+}
+.cerrar{
+    position:absolute;
+    top:10px;
+    right:15px;
+    background:none;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.5);
+}
+.modal-content{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:300px;
+}
+textarea{
+    width:100%;
+    height:80px;
+    margin-top:10px;
+}

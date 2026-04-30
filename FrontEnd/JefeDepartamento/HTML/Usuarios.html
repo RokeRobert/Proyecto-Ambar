@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Usuarios.css">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Usuarios</title>
+</head>
+<body>
+    <div id="sidebar"></div>
+
+<main class="main-content">
+    <div id="topbar"></div>
+
+    <div class="usuarios-admin">
+
+        <!-- HEADER -->
+        <div class="page-header">
+            <h2>Gestión de Usuarios</h2>
+
+            <div class="acciones-header">
+                <input type="text" id="busquedaUsuario" placeholder="Buscar...">
+
+                <select id="filtroTipo">
+                    <option value="">Todos</option>
+                    <option value="Alumno">Alumno</option>
+                    <option value="Docente">Docente</option>
+                </select>
+
+                <select id="filtroCarrera">
+                    <option value="">Todas las carreras</option>
+                    <option value="info">Informática</option>
+                    <option value="ind">Industrial</option>
+                </select>
+
+                <button class="btn-agregar" onclick="abrirModal()">+ Agregar</button>
+            </div>
+        </div>
+
+        <!-- TABLA -->
+        <table class="tabla-usuarios">
+            <thead>
+                <tr>
+                    <th>No.Control</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Correo</th>
+                    <th>Carrera(s)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaUsuarios"></tbody>
+        </table>
+        <!-- PAGINACIÓN -->
+        <div class="paginacion">
+            <button onclick="cambiarPagina(-1)">‹</button>
+            <span id="pagina"></span>
+            <button onclick="cambiarPagina(1)">›</button>
+        </div>
+    </div>
+</main>
+
+<!-- MODAL -->
+<div class="modal" id="modalUsuario">
+    <div class="modal-content">
+        <h3 id="modalTitulo">Agregar Usuario</h3>
+
+        <<input id="control" placeholder="No. Control">
+        <input id="nombre" placeholder="Nombre">
+        <input id="paterno" placeholder="Apellido paterno">
+        <input id="materno" placeholder="Apellido materno">
+        <input id="correo" placeholder="Correo">
+
+        <select id="tipo" onchange="cambiarTipo()">
+            <option value="Alumno">Alumno</option>
+            <option value="Docente">Docente</option>
+        </select>
+
+        <select id="carreraAlumno">
+            <option value="info">Informática</option>
+            <option value="ind">Industrial</option>
+        </select>
+
+        <select id="carrerasDocente" multiple>
+            <option value="info">Informática</option>
+            <option value="ind">Industrial</option>
+        </select>
+
+        <div class="acciones-modal">
+            <button onclick="guardarUsuario()">Guardar</button>
+            <button onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ELIMINAR -->
+<div class="modal" id="modalEliminar">
+    <div class="modal-content small">
+        <p id="textoEliminar"></p>
+        <div class="acciones-modal">
+            <button onclick="confirmarEliminar()">Eliminar</button>
+            <button onclick="cerrarModalEliminar()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+    <script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+    <script src="/FrontEnd/JefeDepartamento/JS/Usuario.js"></script>
+</body>
+</html>

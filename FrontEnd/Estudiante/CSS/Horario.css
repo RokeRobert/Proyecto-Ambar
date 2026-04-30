@@ -1,0 +1,255 @@
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#0b2a4a;
+    color:white;
+    position:fixed;
+    padding:25px 20px;
+}
+
+.logo{
+    margin-bottom:40px;
+    letter-spacing:2px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.menu a:hover{
+    background:#1b4f8a;
+    transform:translateX(4px);
+}
+
+.menu .active{
+    background:#1b4f8a;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5f5;
+    font-size: 15px;
+    transition: all 0.25s ease;
+}
+
+/* ICONOS */
+.menu-item i {
+    width: 20px;
+    height: 20px;
+}
+
+/* HOVER elegante (no caricaturesco) */
+.menu-item:hover {
+    background: rgba(56, 189, 248, 0.12);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+
+/* BOTONES INFERIORES (Soporte y Guía) */
+.sidebar-bottom .menu-item {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 5px 15px;
+    padding-top: 15px;
+}
+
+
+/* Main */
+.main-content{
+    margin-left: 240px;
+    padding: 30px;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* Topbar */
+.topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.topbar h1{
+    color: #0b2a4a;
+}
+
+.topbar p{
+    color: #6c757d;
+    margin-top: 4px;
+}
+
+.perfil{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.perfil img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.acciones-horario{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:15px;
+}
+
+.btn-descargar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#0b2a4a;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    transition:.3s;
+}
+
+.btn-descargar:hover{
+    background:#1b4f8a;
+    transform:translateY(-2px);
+}
+
+.btn-descargar i{
+    width:18px;
+    height:18px;
+}
+
+/* Card horario */
+.horario-card{
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+.horario-card h2{
+    margin-bottom: 20px;
+    color: #0b2a4a;
+}
+
+/* Tabla */
+.tabla-contenedor{
+    overflow-x: auto;
+}
+
+.tabla-horario{
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.tabla-horario th{
+    background: #0b2a4a;
+    color: white;
+    padding: 14px;
+    font-weight: 500;
+}
+
+.tabla-horario td{
+    text-align: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+}
+
+.tabla-horario tr:hover td{
+    background: #f8fbff;
+}
+
+.hora{
+    font-weight: bold;
+    color: #0b2a4a;
+}
+
+/* Materias (colores suaves profesionales) */
+.materia{
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.materia span{
+    display: block;
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.azul{
+    background: #e3f2fd;
+    color: #0b5394;
+}
+
+.verde{
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.morado{
+    background: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.naranja{
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.gris{
+    background: #f1f3f5;
+    color: #6c757d;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+    .sidebar{
+        width: 70px;
+    }
+
+    .menu-item span,
+    .logo .sub{
+        display: none;
+    }
+
+    .main-content{
+        margin-left: 70px;
+    }
+}

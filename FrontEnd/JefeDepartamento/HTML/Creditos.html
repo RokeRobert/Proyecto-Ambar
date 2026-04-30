@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Creditos.css">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Creditos</title>
+</head>
+<body> 
+    <div id="sidebar"></div>
+<main class="main-content">
+    <div id="topbar"></div>
+<div class="creditos-admin">
+     <!-- HEADER PRO -->
+        <div class="page-header">
+            <div>
+                <h2>Validación de Créditos</h2>
+            </div>
+        
+    <!-- FILTROS -->
+    <div class="filtros">
+        <select id="filtroCarrera">
+            <option value="">Todas las carreras</option>
+            <option value="info">Ingeniería Informática</option>
+            <option value="ind">Industrial</option>
+        </select>
+
+        <input type="text" id="busqueda" placeholder="Buscar control...">
+
+        <button class="btn-filtrar" onclick="renderTabla()">Filtrar</button>
+    </div>
+    </div>
+
+        <!-- TABS -->
+    <div class="tabs">
+        <button class="tab active" onclick="cambiarTab('pendiente', event)">Por revisar</button>
+        <button class="tab" onclick="cambiarTab('revisados', event)">Revisados</button>
+    </div>
+
+    <!-- TABLA -->
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>No. Control</th>
+                <th>Carrera</th>
+                <th>Estado</th>
+                <th class="acciones-col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-body"></tbody>
+    </table>
+
+    <!-- PAGINACIÓN -->
+    <div class="paginacion">
+        <button onclick="cambiarPagina(-1)">‹</button>
+        <span id="pagina"></span>
+        <button onclick="cambiarPagina(1)">›</button>
+    </div>
+
+</div>
+
+<!-- MODAL PDF -->
+<div class="modal-pdf" id="modalPDF">
+    <div class="modal-pdf-content">
+        <button class="cerrar" onclick="cerrarPDF()">✕</button>
+        <iframe id="visorPDF"></iframe>
+    </div>
+</div>
+
+<!-- MODAL RECHAZO -->
+<div class="modal" id="modalRechazo">
+    <div class="modal-content">
+        <h3>Motivo de rechazo</h3>
+        <textarea id="motivo"></textarea>
+
+        <div class="acciones-modal">
+            <button class="btn-rechazar" onclick="confirmarRechazo()">Enviar</button>
+            <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+<script src="/FrontEnd/JefeDepartamento/JS/Creditos.js"></script>
+<script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+</body>
+</html>

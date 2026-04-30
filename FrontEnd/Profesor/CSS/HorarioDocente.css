@@ -1,0 +1,471 @@
+/* ========================================================== */
+/* --- 0. NAVEGACIÓN SPA Y ESTRUCTURA PRINCIPAL --- */
+/* ========================================================== */
+.seccion-pagina {
+    display: none; /* Oculta todas por defecto */
+}
+.seccion-pagina.activa {
+    display: block; /* Solo muestra la que tenga esta clase */
+}
+
+/* Forzamos que el contenedor padre use Flexbox para repartir el espacio con el menú */
+#contenedor-ambar {
+    display: flex; 
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    align-items: stretch; /* Estira el menú y el contenido al mismo alto */
+}
+
+/* El contenido principal debe ser flexible y ocupar el sobrante */
+.main-content {
+    flex: 1; 
+    min-width: 0; 
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    
+    /* Igualamos la animación para que se muevan perfectamente juntos */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* ========================================================== */
+/* --- 1. ESTILOS BASE Y VARIABLES --- */
+/* ========================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f4f7fe; 
+    color: #333;
+    -webkit-font-smoothing: antialiased; 
+}
+
+:root {
+    --azul-obscuro: #1A237E;
+    --azul-medio: #3949ab;
+    --gris-suave: #666;
+    --blanco: #ffffff;
+    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+    --transicion: 0.3s;
+}
+
+h1, h2, h3, .materia-nombre, .renglon-titulo {
+    font-weight: 600; 
+    color: #000000;
+}
+
+p, span, .materia-info {
+    font-weight: 400;
+}
+
+/* ========================================================== */
+/* --- 2. VISTA HORARIO --- */
+/* ========================================================== */
+.horario-container {
+    width: 100%; /* Que use todo el espacio disponible */
+    margin: 0 auto;
+}
+
+.header-horario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-horario h1 { color: var(--azul-obscuro); }
+.periodo { color: var(--gris-suave); margin-top: 5px; }
+
+.card-horario {
+    background: var(--blanco);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    width: 100%;
+    overflow-x: auto; /* Scroll horizontal si la tabla es muy ancha */
+}
+
+table {
+    width: 100%;
+    border-spacing: 10px;
+    border-collapse: separate;
+    table-layout: auto; 
+}
+
+th {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--gris-suave);
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 15px !important;
+    min-width: 150px;
+    vertical-align: middle;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+td:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.materia-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.materia-nombre { font-weight: 700; font-size: 0.95rem; color: var(--azul-obscuro); }
+.materia-info { font-size: 0.8rem; color: #666; display: flex; gap: 5px; }
+
+.border-azul { border-left: 5px solid #3949AB; }
+.border-verde { border-left: 5px solid #43A047; }
+
+.info-extra {
+    background: #e9edf5;
+    padding: 12px;
+    border-radius: 10px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ========================================================== */
+/* --- 3. VISTA DETALLE (CUADRÍCULA 2x2) --- */
+/* ========================================================== */
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-bottom: 25px;
+}
+
+.btn-back-blue {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--azul-obscuro);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-back-blue i { color: white !important; font-size: 30px; }
+
+.badge-grupo {
+    display: inline-block;
+    background-color: #E8EAF6;
+    color: var(--azul-obscuro);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.grid-gestion {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Columnas exactas */
+    gap: 30px; 
+    width: 100%; /* Ocupa el 100% del contenedor main-content */
+    margin-top: 20px;
+}
+
+.card-gestion {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.card-gestion:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.card-header-gestion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.card-header-gestion i {
+    font-size: 1.5rem;
+    color: var(--azul-obscuro);
+}
+
+.card-header-gestion h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.card-icon {
+    width: 45px; height: 45px;
+    background: #E8EAF6; color: var(--azul-obscuro);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+}
+
+.btn-editar {
+    background: var(--azul-obscuro);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 15px;
+}
+
+.btn-editar:hover {
+    background: var(--azul-medio);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================================== */
+/* --- 4. VISTA EDITOR Y ACORDEÓN --- */
+/* ========================================================== */
+.form-editar input, 
+.form-editar textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+#titulo { font-weight: bold; font-size: 1.2rem; color: var(--azul-obscuro); }
+
+.lista-items, #lista-dinamica { 
+    list-style: none; 
+    padding: 0; 
+    margin-top: 20px; 
+    display: block;
+}
+
+.renglon-acordeon, .fuente-item-container {
+    background: white;
+    border: 1px solid #e0e6ed;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.renglon-header, .fuente-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+}
+
+.fuente-titulo-seccion {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 10px;
+}
+
+.check-eliminar {
+    width: 18px;
+    height: 18px;
+    accent-color: #1b61e2;
+}
+
+.renglon-body, .fuente-item-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    background: #fafafa;
+}
+
+.renglon-acordeon.open .renglon-body, .fuente-item-body.open {
+    max-height: 1000px;
+    border-top: 1px solid #eee;
+}
+
+.fuente-item-body.open {
+    padding: 15px;
+}
+
+.renglon-body p, .fuente-item-body p {
+    padding: 15px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+/* Botones de acción dentro de items */
+.fuente-acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit-small, .btn-accion-item {
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-edit-small {
+    background: var(--azul-obscuro);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.btn-edit-small:hover { background: var(--azul-medio); transform: scale(1.05); }
+
+.btn-accion-item {
+    width: 35px; height: 35px;
+    border-radius: 50%;
+}
+
+.btn-accion-item.edit { background: #E8EAF6; color: #1A237E; }
+.btn-accion-item.toggle { background: #f5f5f5; color: #666; }
+.btn-accion-item:hover { transform: scale(1.1); }
+
+/* Rotación flecha acordeón */
+.bx-chevron-down.rotate { transform: rotate(180deg); }
+
+/* Botones genéricos de acciones */
+.botones-acciones button:first-child:hover { filter: brightness(1.2); }
+.botones-acciones button:first-child:active { transform: translateY(2px); }
+.botones-acciones button[style*="background: #e53935"]:hover { background: #b71c1c !important; }
+.botones-acciones button[style*="background: #e53935"]:active { transform: scale(0.95); }
+
+/* ========================================================== */
+/* --- 5. MODAL DE ALERTA --- */
+/* ========================================================== */
+.modal-alert {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(5px); 
+    z-index: 10000; 
+    align-items: center;
+    justify-content: center;
+}
+
+.alert-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.alert-icon i {
+    font-size: 60px;
+    color: #e53935; 
+    margin-bottom: 15px;
+}
+
+.alert-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.alert-btns button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cancel { background: #eee; color: #333; }
+.btn-confirm { background: #e53935; color: white; }
+
+/* ========================================================== */
+/* --- 6. BOTONES EXTRAS --- */
+/* ========================================================== */
+.btn-materia {
+    transition: all 0.3s ease !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 50px; 
+    background-color: #1A237E; 
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-materia:hover {
+    background-color: #3949ab !important; 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 12px rgba(26, 35, 126, 0.3);
+}
+
+.btn-materia:active {
+    transform: translateY(0px); 
+    background-color: #121858 !important; 
+}
+
+/* ========================================================== */
+/* --- 7. RESPONSIVE --- */
+/* ========================================================== */
+@media (max-width: 900px) {
+    .grid-gestion {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas medianas o celulares */
+    }
+}

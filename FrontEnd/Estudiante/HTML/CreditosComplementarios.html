@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creditos Complementarios | ÁMBAR</title>
+<link rel="stylesheet" href="../css/CreditosComplementarios.css">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script defer src="../JS/CreditosComplementarios.js"></script>
+</head>
+<body>
+
+<!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+<!-- CONTENIDO -->
+<main class="main-content">
+    <!-- TOPBAR (SIN CAMBIOS) -->
+    <div class="topbar">
+        <div>
+            <h1>Creditos Complementarios</h1>
+            <p id="topbar-carrera"></p>
+        </div>
+
+        <div class="perfil">
+            <img id="topbar-foto" src="" alt="Perfil">
+            <div>
+                <span class="nombre" id="topbar-nombre"></span>
+                <span class="control" id="topbar-control"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenedor">
+
+        <!-- TARJETA DE PROGRESO -->
+        <div class="card-progreso">
+            <h2>Progreso de Créditos</h2>
+
+            <p class="creditos-texto">
+                Has completado <span id="creditos-completados"></span> de <span id="creditos-totales"></span> créditos
+            </p>
+
+            <div class="barra">
+                <div class="progreso" id="barra-progreso" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- SUBIR ARCHIVO -->
+        <div class="card-subida">
+            <h2>Subir Evidencia</h2>
+
+            <p class="info">
+                Sube un solo archivo PDF con tus 5 créditos complementarios para evaluación.
+            </p>
+
+            <input type="file" id="archivo" accept=".pdf">
+
+            <button class="btn-enviar" onclick="enviarEvidencia()">Enviar para evaluación</button>
+        </div>
+    </div>
+    
+    <!-- DETALLE DE CRÉDITOS -->
+<div class="card-detalle">
+    <h2>Detalle de Créditos</h2>
+
+    <div class="lista-creditos" id="lista-creditos">
+        <!-- Los créditos se insertarán dinámicamente aquí -->
+    </div>
+</div>
+</main>
+<script defer src="../JS/menu.js"></script>
+
+<script> 
+    lucide.createIcons();
+</script>
+</body>
+</html>

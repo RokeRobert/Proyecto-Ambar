@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Carga Materia - AMBAR</title>
+
+    <link rel="stylesheet" href="../CSS/CargaMaterias.css">
+    <script defer src="../JS/CargaMaterias.js"></script>
+    
+    <!-- Iconos elegantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Menú lateral dinámico común para todas las páginas -->
+    <sidebar-menu></sidebar-menu>
+
+
+<main class="main-content">
+    <div class="contenedor-carga">
+
+        <!-- HEADER DASHBOARD -->
+        <div class="dashboard">
+
+            <div class="info-alumno">
+                <h2>Inscripción de Materias</h2>
+
+                <div class="datos">
+                    <div><strong>Nombre:</strong> <span id="alumno-nombre"></span></div>
+                    <div><strong>Carrera:</strong> <span id="alumno-carrera"></span></div>
+                    <div><strong>Semestre:</strong> <span id="alumno-semestre"></span></div>
+                </div>
+
+                <div class="creditos-box">
+                    <div class="credito-item">
+                        <span>Permitidos</span>
+                        <strong>30</strong>
+                    </div>
+
+                    <div class="credito-item">
+                        <span>Acumulados</span>
+                        <strong id="creditosActuales">0</strong>
+                    </div>
+
+                    <div class="credito-item">
+                        <span>Disponibles</span>
+                        <strong id="creditosDisponibles">30</strong>
+                    </div>
+                </div>
+
+                <!-- Barra -->
+                <div class="barra">
+                    <div id="barraProgreso"></div>
+                </div>
+            </div>
+
+            <!-- BOTÓN TICKET -->
+            <button class="btn-ticket" id="btnAbrirModal">
+                Generar Ticket
+            </button>
+        </div>
+
+        <!-- MODAL -->
+<div class="modal" id="modalTicket">
+
+    <div class="modal-contenido">
+
+        <div class="modal-header">
+            <h2>Generación de ticket</h2>
+            <button class="cerrar" id="cerrarModal">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <label>Tipo de ticket</label>
+            <select id="tipoTicket" class="input">
+                <option value="">Seleccione una opción</option>
+                <option>Recibo no generado</option>
+                <option>Error en pago</option>
+                <option>Problema técnico</option>
+            </select>
+
+            <label>Observaciones</label>
+            <textarea id="observaciones" class="input" placeholder="Describe tu problema..."></textarea>
+
+            <label>Evidencia</label>
+            <input type="file" id="evidencia" class="input" accept="image/*" onchange="mostrarImagen(event)">
+
+            <img id="preview" style="margin-top:10px; max-width:50%; display:none;">
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-cancelar" id="btnCancelar">Cerrar</button>
+            <button class="btn-confirmar" id="btnConfirmar">Confirmar</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+        <!-- SECCIONES -->
+        <div class="secciones">
+
+            <!-- DISPONIBLES -->
+            <div class="bloque">
+
+                <h3>Materias Disponibles</h3>
+
+                <!-- SUBTABS -->
+                <div class="subtabs">
+                    <button class="subtab activo">Materias</button>
+                    <button class="subtab">Paquetes</button>
+                </div>
+
+                <div class="lista-materias">
+
+                    <div class="card-materia">
+                        <div class="info">
+                            <h4>Cálculo Diferencial</h4>
+                            <span>ACF-0901</span>
+                            <p>Juan Pérez</p>
+                            <p class="creditos">5 créditos</p>
+                        </div>
+
+                        <button class="btn-seleccionar" onclick="abrirPreview(materia1)">
+                            Seleccionar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CARGADAS -->
+            <div class="bloque">
+
+                <h3>Materias Cargadas</h3>
+
+                <div id="listaCargadas"></div>
+
+                <button class="btn-horario-final" onclick="verHorario()">
+                    Ver horario final
+                </button>
+
+                <!-- BOTÓN PARA GUARDAR LA CARGA EN LA BASE DE DATOS -->
+<div style="display: flex; justify-content: flex-end; margin-top: 25px; margin-bottom: 30px;">
+    <button onclick="finalizarCarga()" style="background: #1bbf5c; color: white; padding: 12px 25px; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 6px 15px rgba(27, 191, 92, 0.25); transition: all 0.3s ease;">
+        <i data-lucide="save"></i> Finalizar Carga
+    </button>
+</div>
+
+
+            </div>
+
+        </div>
+        <div id="toast" class="toast"></div>
+
+    </div>
+
+    <!-- MODAL PREVIEW MATERIA -->
+<div id="modalPreview" class="modal">
+
+    <div class="modal-box">
+
+        <h2>Previsualización</h2>
+
+        <div class="preview-container">
+
+            <!-- IZQUIERDA -->
+            <div class="preview-info">
+                <h3 id="nombreMateria"></h3>
+                <p id="infoMateria"></p>
+                <p><strong>Créditos:</strong> <span id="creditosMateria"></span></p>
+            </div>
+
+            <!-- DERECHA -->
+            <div class="preview-horario">
+                <div id="previewHorario" class="horario"></div>
+            </div>
+
+        </div>
+
+        <div style="display: flex; gap:10px;">
+            <button class="btn cancelar" onclick="cerrarPreview()">Cancelar</button>
+            <button class="btn confirmar" onclick="confirmarCarga()">Cargar</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalHorario" class="modal">
+    <div class="modal-box">
+        <h2>Horario Final</h2>
+        <button class="btn cancelar" onclick="cerrarHorario()">Cerrar</button>
+        <div id="horarioFinal" class="horario"></div>
+    </div>
+</div>
+</main>
+
+<script defer src="../JS/menu.js"></script>
+
+</body>
+</html>

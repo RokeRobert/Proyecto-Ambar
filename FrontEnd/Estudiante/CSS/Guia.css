@@ -1,0 +1,171 @@
+:root{
+  --azul-principal:#0b2e59;
+  --azul-secundario:#1e4d8f;
+  --acento:#2f7df6;
+  --fondo:#f4f7fb;
+  --blanco:#ffffff;
+  --gris:#e5e7eb;
+  --texto:#1f2937;
+}
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#0b2a4a;
+    color:white;
+    position:fixed;
+    padding:25px 20px;
+}
+
+.logo{
+    margin-bottom:40px;
+    letter-spacing:2px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    padding:12px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+}
+
+.menu a:hover{
+    background:#1b4f8a;
+    transform:translateX(4px);
+}
+
+.menu .active{
+    background:#1b4f8a;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5f5;
+    font-size: 15px;
+    transition: all 0.25s ease;
+}
+
+/* ICONOS */
+.menu-item i {
+    width: 20px;
+    height: 20px;
+}
+
+/* HOVER elegante (no caricaturesco) */
+.menu-item:hover {
+    background: rgba(56, 189, 248, 0.12);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+
+/* BOTONES INFERIORES (Soporte y Guía) */
+.sidebar-bottom .menu-item {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 5px 15px;
+    padding-top: 15px;
+}
+
+/* CONTENIDO */
+.contenido-principal{
+    margin-left:240px;
+    padding:30px;
+    background:#f4f6f9;
+    min-height:100vh;
+}
+
+.contenedor-video{
+    display:flex;
+    justify-content:center;
+    margin-top:30px;
+}
+
+/* TARJETA */
+.tarjeta-video{
+    width:850px;
+    max-width:100%;
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.05);
+    animation:fadeIn .5s ease;
+}
+
+/* TITULO */
+.tarjeta-video h2{
+    color:#0b2a4a;
+    margin-bottom:10px;
+}
+
+/* DESCRIPCIÓN */
+.descripcion-video{
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:15px;
+}
+
+/* VIDEO */
+.video-wrapper{
+    position:relative;
+    width:100%;
+    padding-bottom:56.25%;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.video-wrapper iframe{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
+
+/* INFO EXTRA */
+.info-extra{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.item-info{
+    background:#f1f5f9;
+    padding:8px 12px;
+    border-radius:8px;
+    font-size:13px;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
