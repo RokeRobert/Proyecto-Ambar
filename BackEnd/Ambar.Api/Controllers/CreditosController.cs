@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Ambar.Api.Repositories;
-using Ambar.Api.DTOs;
 
 namespace Ambar.Api.Controllers
 {
@@ -50,19 +49,6 @@ namespace Ambar.Api.Controllers
 
             if (guardado) return Ok(new { success = true, mensaje = "Archivo subido correctamente para revisión." });
             return StatusCode(500, new { success = false, mensaje = "Error al guardar en base de datos." });
-        }
-
-        [HttpGet("admin")]
-        public async Task<IActionResult> GetAdmin()
-        {
-            return Ok(await _repo.GetCreditosAdminAsync());
-        }
-
-        [HttpPut("estatus")]
-        public async Task<IActionResult> ActualizarEstatus([FromBody] ActualizarEstatusCreditoDto dto)
-        {
-            bool ok = await _repo.ActualizarEstatusCreditoAsync(dto);
-            return ok ? Ok(new { success = true }) : BadRequest("Error al actualizar el crédito.");
         }
     }
 }

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Ambar.Api.Repositories;
-using Ambar.Api.DTOs;
 
 namespace Ambar.Api.Controllers
 {
@@ -45,25 +44,6 @@ namespace Ambar.Api.Controllers
             bool guardado = await _repo.CrearTicketAsync(idAlumno, tipoProblema, observaciones, evidenciaUrl);
             if (guardado) return Ok(new { success = true, mensaje = "Ticket generado correctamente." });
             return StatusCode(500, new { success = false, mensaje = "Error al guardar el ticket en base de datos." });
-        }
-
-        [HttpGet("admin/alumnos")]
-        public async Task<IActionResult> GetAdminAlumnos()
-        {
-            return Ok(await _repo.GetTicketsAlumnosAsync());
-        }
-
-        [HttpGet("admin/profesores")]
-        public async Task<IActionResult> GetAdminProfesores()
-        {
-            return Ok(await _repo.GetTicketsProfesoresAsync());
-        }
-
-        [HttpPut("admin/estatus")]
-        public async Task<IActionResult> ActualizarEstatusAdmin([FromBody] ActualizarEstatusTicketDto dto)
-        {
-            bool ok = await _repo.ActualizarEstatusAdminAsync(dto);
-            return ok ? Ok(new { success = true }) : BadRequest("Error al actualizar ticket.");
         }
     }
 }

@@ -1,0 +1,76 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\profiles\7.jpeg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ambar.Api</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ambar.Api</BasePath>
+      <RelativePath>images/profiles/7.jpeg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>j039uadf43</Fingerprint>
+      <Integrity>fbI0BwSBInboSuGK0tNNvZddCtwIZ7WdF8la27OlOHk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\profiles\7.jpeg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documentos\tickets\6_ticket_639129264763031218.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ambar.Api</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ambar.Api</BasePath>
+      <RelativePath>uploads/documentos/tickets/6_ticket_639129264763031218.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>uppg0duiu5</Fingerprint>
+      <Integrity>Mpp8AwOUAwIgwqkFzcpBUsyq/bV9Ti/grGJ6S2/Zzss=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documentos\tickets\6_ticket_639129264763031218.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documentos\tickets\6_ticket_639129265263421122.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ambar.Api</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ambar.Api</BasePath>
+      <RelativePath>uploads/documentos/tickets/6_ticket_639129265263421122.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>uppg0duiu5</Fingerprint>
+      <Integrity>Mpp8AwOUAwIgwqkFzcpBUsyq/bV9Ti/grGJ6S2/Zzss=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documentos\tickets\6_ticket_639129265263421122.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documentos\tickets\6_ticket_639129275933816928.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Ambar.Api</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Ambar.Api</BasePath>
+      <RelativePath>uploads/documentos/tickets/6_ticket_639129275933816928.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>uppg0duiu5</Fingerprint>
+      <Integrity>Mpp8AwOUAwIgwqkFzcpBUsyq/bV9Ti/grGJ6S2/Zzss=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documentos\tickets\6_ticket_639129275933816928.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>

@@ -16,7 +16,7 @@
                 <!-- HEADER PRO -->
         <div class="page-header">
             <div>
-                <h2>Tickets de Alumnos</h2>
+                <h2>Gestión de Tickets</h2>
             </div>
         
 
@@ -29,7 +29,9 @@
             <option value="resuelto">Resueltos</option>
         </select>
 
-            <input type="text" id="busqueda" placeholder="Buscar por nombre o ID...">
+        <input type="text" id="busqueda" placeholder="Buscar alumno...">
+
+        <button onclick="filtrar()" class="btn-filtrar">Filtrar</button>
     </div>
     </div>
 
@@ -37,7 +39,7 @@
     <table class="tabla-tickets">
         <thead>
             <tr>
-                    <th>Remitente</th>
+                <th>Alumno</th>
                 <th>Problema</th>
                 <th>Estado</th>
                 <th>Acción</th>
@@ -61,8 +63,7 @@
 
         <div id="detalleTicket"></div>
 
-        <!-- Nota: Oculto temporalmente ya que no hay columna en BD para respuesta -->
-        <textarea id="respuesta" placeholder="Escribe la respuesta al alumno..." style="display:none;"></textarea>
+        <textarea id="respuesta" placeholder="Escribe la respuesta al alumno..."></textarea>
 
         <div class="acciones-modal">
             <button class="btn-proceso" onclick="cambiarEstado('proceso')">En proceso</button>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMBAR | Panel de Coordinación</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <link rel="stylesheet" href="/FrontEnd/Profesor/CSS/MenuDocente.css">
+    <link rel="stylesheet" href="/FrontEnd/Coordinador/CSS/GestionGlobal.css"> 
+</head>
+
+<body>
+
+    <main class="main-content expand" id="contenedor-principal">
+        <div class="pantalla-bienvenida">
+            <h1>Bienvenido al Panel de Control AMBAR TEC</h1>
+            <p>Seleccione una opción del menú lateral para comenzar la gestión académica.</p>
+        </div>
+    </main>
+
+    <!-- Se añade el script del menú del profesor para que el coordinador también vea esas opciones -->
+    <script src="/FrontEnd/Profesor/JS/MenuDocente.js"></script>
+    <script src="/FrontEnd/Coordinador/JS/MenuCoordinador.js"></script>
+    <script src="/FrontEnd/Coordinador/JS/DocenteMaterias.js"></script>
+    <script src="/FrontEnd/Coordinador/JS/AlumnoMaterias.js"></script>
+    <script src="/FrontEnd/Coordinador/JS/ConfiguracionPeriodo.js"></script>
+
+</body>
+</html>

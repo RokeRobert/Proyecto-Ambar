@@ -1,0 +1,185 @@
+/* Todo lo que da forma a las tablas y badges. */
+/* --- Se utiliza en ConfiguracionPeriodo.js, DocenteMaterias.js, --- */
+/* --- DISEÑO DE TABLAS --- */
+
+.tabla-container {
+    background: white;
+    padding: 10px;
+    border-radius: 20px; /* Más curvo para un look moderno */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Sombra muy suave y amplia */
+    border: 1px solid #f0f0f0;
+    margin-top: 10px;
+    transition: var(--transition-pro);
+}
+
+.tabla-gestion {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Crea espacio entre filas para que parezcan tarjetas */
+}
+
+/* --- ESTILO DE CABECERA --- */
+.tabla-gestion thead th {
+    background-color: transparent;
+    color: #9ca3af; /* Gris claro profesional */
+    text-transform: uppercase;
+    padding: 15px 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: none;
+}
+
+/* --- FILAS CON EFECTO "CARD" --- */
+.tabla-gestion tbody tr {
+    background-color: white;
+    transition: var(--transition-pro);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Bordes redondeados para las celdas de los extremos */
+.tabla-gestion tbody tr td:first-child { border-radius: 12px 0 0 12px; border-left: 1px solid #f0f0f0; }
+.tabla-gestion tbody tr td:last-child { border-radius: 0 12px 12px 0; border-right: 1px solid #f0f0f0; }
+.tabla-gestion tbody tr td { 
+    padding: 18px 20px; 
+    border-top: 1px solid #f0f0f0; 
+    border-bottom: 1px solid #f0f0f0;
+    color: #4b5563;
+}
+
+/* MOVIMIENTO: La fila se eleva y brilla al pasar el mouse */
+.tabla-gestion tbody tr:hover {
+    transform: scale(1.01) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    background-color: #ffffff;
+    z-index: 5;
+}
+
+/* --- BADGES CON ESTILO "GLASS" --- */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-active { 
+    background: #e8f5e9; 
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+/* BOTONES DE ACCIÓN  */
+
+.acciones-fila {
+    display: flex;
+    gap: 12px; /* Espacio entre botones */
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.btn-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* Bordes redondeados modernos */
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Movimiento suave */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra inicial sutil */
+}
+
+/* EFECTO CUANDO PASAS EL MOUSE */
+.btn-icon:hover {
+    background: var(--azul-obscuro); /* Cambia a color azul */
+    color: white;
+    border-color: var(--azul-obscuro);
+    transform: translateY(-4px) rotate(8deg); /* SE ELEVA Y GIRA */
+    box-shadow: 0 8px 15px rgba(26, 35, 126, 0.2); /* SOMBRA PROFUNDA */
+}
+
+/* EFECTO CUANDO PASAS EL MOUSE POR EL BOTÓN "DELETE" */
+.btn-icon.delete:hover {
+    background: #fee2e2; /* Fondo rojo suave */
+    color: #dc2626;      /* Icono rojo fuerte */
+    border-color: #fecaca;
+    transform: translateY(-4px) rotate(-8deg); /* GIRA AL OTRO LADO */
+    box-shadow: 0 8px 15px rgba(220, 38, 38, 0.15);
+}
+
+/* EFECTO CUANDO LE DAS CLIC */
+.btn-icon:active {
+    transform: translateY(-1px) scale(0.9); /* SE ACHICA UN POQUITO */
+}
+
+/* --- ESTILOS PARA LA SECCIÓN DE GESTIÓN DE ALUMNOS (INSCRIPCIONES) --- */
+
+.card-gestion {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    border: 1px solid #f0f0f0;
+    margin-top: 10px;
+}
+
+.panel-doble {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card-header-gestion h3 {
+    color: var(--azul-obscuro);
+    margin: 0;
+}
+
+.lista-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.lista-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.lista-items li:last-child {
+    border-bottom: none;
+}
+
+.lista-items li:hover {
+    background-color: #f9fafb;
+}
+
+.btn-add, .btn-delete-item {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+}
+
+.btn-add { background: #e8f5e9; color: #2e7d32; }
+.btn-add:hover { background: #c8e6c9; transform: scale(1.1); }
+
+.btn-delete-item { background: #ffebee; color: #c62828; }
+.btn-delete-item:hover { background: #ffcdd2; transform: scale(1.1); }

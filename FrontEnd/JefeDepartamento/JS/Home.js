@@ -1,49 +1,95 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. Proteger la pantalla con la sesión
-    const sesion = localStorage.getItem("profesorSesion");
-    if (!sesion) {
-        window.location.href = "/FrontEnd/Profesor/HTML/Login.html";
-        return;
+let datosGlobal = {
+    todas: {
+        alumnos: 120,
+        pagosPendientes: 35,
+        creditosPendientes: 12,
+        tickets: 8,
+        pagos: { pagados: 85, pendientes: 35 },
+        creditos: { aprobados: 60, rechazados: 15, pendientes: 12 }
+    },
+    info: {
+        alumnos: 70,
+        pagosPendientes: 20,
+        creditosPendientes: 5,
+        tickets: 3,
+        pagos: { pagados: 50, pendientes: 20 },
+        creditos: { aprobados: 40, rechazados: 5, pendientes: 5 }
+    },
+    ind: {
+        alumnos: 50,
+        pagosPendientes: 15,
+        creditosPendientes: 7,
+        tickets: 5,
+        pagos: { pagados: 35, pendientes: 15 },
+        creditos: { aprobados: 20, rechazados: 10, pendientes: 7 }
     }
-    
-    const adminData = JSON.parse(sesion);
-    const rol = adminData.rol.toLowerCase();
-    
-    if (rol !== "administrador" && rol !== "jefe de departamento") {
-        window.location.href = "/FrontEnd/Profesor/HTML/Login.html";
-        return;
-    }
-
-    // Cargar datos al abrir la página
-    cargarDashboard();
-});
-
-window.filtrarDashboard = function() {
-    // Se dispara cuando cambias el select de carrera
-    cargarDashboard();
 };
 
-async function cargarDashboard() {
-    const carrera = document.getElementById("filtroCarrera").value;
+let chartPagos;
+let chartCreditos;
 
-    try {
-        const res = await fetch(`http://localhost:5067/api/dashboard/resumen?carrera=${carrera}`);
-        
-        if (!res.ok) {
-            const errorMsg = await res.text();
-            throw new Error(errorMsg || "Error al obtener los datos del dashboard");
+// INICIO
+document.addEventListener("DOMContentLoaded", () => {
+    cargarDashboard("todas");
+});
+
+
+// =========================
+// FILTRO GLOBAL
+// =========================
+function filtrarDashboard(){
+    let carrera = document.getElementById("filtroCarrera").value;
+    cargarDashboard(carrera);
+}
+
+
+// =========================
+// CARGAR DASHBOARD
+// =========================
+function cargarDashboard(tipo){
+
+    let datos = datosGlobal[tipo];
+
+    // CARDS
+    document.getElementById("totalAlumnos").textContent = datos.alumnos;
+    document.getElementById("pagosPendientes").textContent = datos.pagosPendientes;
+    document.getElementById("creditosPendientes").textContent = datos.creditosPendientes;
+    document.getElementById("tickets").textContent = datos.tickets;
+
+    // DESTRUIR GRÁFICAS
+    if(chartPagos) chartPagos.destroy();
+    if(chartCreditos) chartCreditos.destroy();
+
+    // =========================
+    // GRÁFICA PAGOS
+    // =========================
+    chartPagos = new Chart(document.getElementById("graficaPagos"), {
+        type: "doughnut",
+        data: {
+            labels: ["Pagados", "Pendientes"],
+            datasets: [{
+                data: [datos.pagos.pagados, datos.pagos.pendientes],
+                backgroundColor: ["#16a34a", "#dc2626"],
+                hoverOffset: 15
+            }]
         }
-        
-        const data = await res.json();
+    });
 
-        // 1. Llenar los conteos de las Tarjetas Superiores
-        document.getElementById("totalAlumnos").textContent = data.totalAlumnos;
-        document.getElementById("pagosPendientes").textContent = data.pagosPendientes;
-        document.getElementById("creditosPendientes").textContent = data.creditosPendientes;
-        document.getElementById("tickets").textContent = data.ticketsAbiertos;
-
-    } catch (error) {
-        console.error("Error en Dashboard:", error);
-        alert("Error al cargar la base de datos. Revisa la terminal de C# (puede haber un error con las columnas).");
-    }
+    // =========================
+    // GRÁFICA CRÉDITOS
+    // =========================
+    chartCreditos = new Chart(document.getElementById("graficaCreditos"), {
+        type: "bar",
+        data: {
+            labels: ["Aprobados", "Rechazados", "Pendientes"],
+            datasets: [{
+                data: [
+                    datos.creditos.aprobados,
+                    datos.creditos.rechazados,
+                    datos.creditos.pendientes
+                ],
+                backgroundColor: ["#16a34a", "#dc2626", "#f59e0b"]
+            }]
+        }
+    });
 }
