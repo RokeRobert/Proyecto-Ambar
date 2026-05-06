@@ -32,8 +32,6 @@
         <div class="filtros">
             <select id="carrera">
                 <option value="">Carrera</option>
-                <option value="info">Ingeniería Informática</option>
-                <option value="ind">Industrial</option>
             </select>
 
             <select id="semestre">
@@ -41,6 +39,12 @@
                 <option value="1">1°</option>
                 <option value="2">2°</option>
                 <option value="3">3°</option>
+                <option value="4">4°</option>
+                <option value="5">5°</option>
+                <option value="6">6°</option>
+                <option value="7">7°</option>
+                <option value="8">8°</option>
+                <option value="9">9°</option>
             </select>
 
             <input type="text" id="busqueda" placeholder="Buscar materia...">
@@ -59,6 +63,7 @@
                     <th>Materia</th>
                     <th>Créditos</th>
                     <th>Semestre</th>
+                    <th>Carrera</th>
                     <th class="acciones-col">Acciones</th>
                 </tr>
             </thead>
@@ -79,7 +84,7 @@
 
         <div class="modal-body">
             <label>Clave</label>
-            <input type="text" id="claveMateria" placeholder="Ej. INF101">
+            <input type="text" id="claveMateria" readonly placeholder="Se genera automáticamente" style="background:#e2e8f0; cursor:not-allowed;">
 
             <label>Nombre de la materia</label>
             <input type="text" id="nombreMateria">
@@ -92,6 +97,30 @@
                 <option value="1">1°</option>
                 <option value="2">2°</option>
                 <option value="3">3°</option>
+                <option value="4">4°</option>
+                <option value="5">5°</option>
+                <option value="6">6°</option>
+                <option value="7">7°</option>
+                <option value="8">8°</option>
+                <option value="9">9°</option>
+            </select>
+
+            <label>Carrera a la que pertenece</label>
+            <select id="carreraMateria">
+                <option value="">Tronco Común (Todas)</option>
+            </select>
+
+            <label>Especialidad</label>
+            <div style="display:flex; gap:10px;">
+                <select id="especialidadMateria" style="flex:1; padding:8px; border-radius:6px; border:1px solid #cbd5e1;">
+                    <option value="">Sin Especialidad</option>
+                </select>
+                <button onclick="abrirModalEspecialidad()" style="background:#f59e0b; color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer; font-weight:bold;">+ Nueva</button>
+            </div>
+
+            <label>Materia Requisito (Seriación)</label>
+            <select id="requisitoMateria">
+                <option value="">Ninguna</option>
             </select>
         </div>
 
@@ -115,6 +144,19 @@
             <button class="btn-cancelar" onclick="cerrarModalEliminar()">Cancelar</button>
         </div>
 
+    </div>
+</div>
+
+<!-- MODAL NUEVA ESPECIALIDAD -->
+<div class="modal" id="modalEspecialidad">
+    <div class="modal-content modal-small">
+        <h3 style="margin-bottom:15px; color:#1a237e;">Crear Especialidad</h3>
+        <input type="text" id="nombreNuevaEsp" placeholder="Ej. Desarrollo de Software" style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; margin-bottom:20px;">
+        
+        <div class="acciones-modal">
+            <button class="btn-guardar" onclick="guardarEspecialidad()">Guardar</button>
+            <button class="btn-cancelar" onclick="cerrarModalEspecialidad()">Cancelar</button>
+        </div>
     </div>
 </div>
 

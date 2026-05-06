@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Usuarios.css">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Alumnos</title>
+</head>
+<body>
+    <div id="sidebar"></div>
+
+<main class="main-content">
+    <div id="topbar"></div>
+
+    <div class="usuarios-admin">
+
+        <!-- HEADER -->
+        <div class="page-header">
+            <h2>Gestión de Alumnos</h2>
+
+            <div class="acciones-header">
+                <input type="text" id="busquedaUsuario" placeholder="Buscar por nombre o control...">
+
+                <select id="filtroCarrera">
+                    <option value="">Todas las carreras</option>
+                </select>
+
+                <button class="btn-agregar" onclick="abrirModal()">+ Agregar Alumno</button>
+            </div>
+        </div>
+
+        <!-- TABLA -->
+        <table class="tabla-usuarios">
+            <thead>
+                <tr>
+                    <th>No. Control</th>
+                    <th>Nombre Completo</th>
+                    <th>Correo Institucional</th>
+                    <th>Carrera</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaUsuarios"></tbody>
+        </table>
+        <!-- PAGINACIÓN -->
+        <div class="paginacion">
+            <button onclick="cambiarPagina(-1)">‹</button>
+            <span id="pagina"></span>
+            <button onclick="cambiarPagina(1)">›</button>
+        </div>
+    </div>
+</main>
+
+<!-- INICIO DEL MODAL -->
+<div id="modalUsuario" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:700px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="margin: 0; color: #1a237e;">Agregar Alumno</h2>
+            <button onclick="cerrarModal()" style="border: none; background: transparent; cursor: pointer; font-size: 24px; color: #64748b;">&times;</button>
+        </div>
+
+        <!-- FORMULARIO ALUMNO -->
+        <div id="formAlumno" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div><label style="font-size: 13px; color: #64748b;">Nombre(s)</label><input type="text" id="al_nombre" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">Primer Apellido</label><input type="text" id="al_apellido1" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">Segundo Apellido</label><input type="text" id="al_apellido2" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">CURP</label><input type="text" id="al_curp" maxlength="18" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">Teléfono</label><input type="text" id="al_telefono" maxlength="10" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">Correo Personal</label><input type="email" id="al_correo" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">Fecha Nacimiento</label><input type="date" id="al_fechaNac" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+            <div><label style="font-size: 13px; color: #64748b;">Carrera</label><select id="al_carrera" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></select></div>
+            <div><label style="font-size: 13px; color: #64748b;">Periodo Actual (Auto)</label><select id="al_periodo" disabled style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; background:#e2e8f0; cursor:not-allowed; appearance:none;"></select></div>
+            <div><label style="font-size: 13px; color: #64748b;">Contraseña Temporal</label><input type="text" id="al_pass" placeholder="Por defecto será su CURP" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;"></div>
+        </div>
+
+        <div style="margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button onclick="cerrarModal()" style="padding: 10px 20px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; font-weight: bold; cursor: pointer;">Cancelar</button>
+            <button onclick="guardarUsuario()" style="padding: 10px 20px; background: #1bbf5c; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Guardar Alumno</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ELIMINAR -->
+<div class="modal" id="modalEliminar" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+    <div class="modal-content small" style="background:white; padding:30px; border-radius:15px; text-align:center; width:90%; max-width:400px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+        <h3 style="color:#e53935; margin-bottom:10px;">¿Eliminar Alumno?</h3>
+        <p id="textoEliminar" style="color:#64748b; margin-bottom:20px;"></p>
+        <div class="acciones-modal" style="display:flex; justify-content:center; gap:10px;">
+            <button onclick="cerrarModalEliminar()" style="padding:10px 20px; border-radius:8px; border:none; background:#f1f5f9; color:#64748b; font-weight:bold; cursor:pointer;">Cancelar</button>
+            <button onclick="confirmarEliminar()" style="padding:10px 20px; background:#e53935; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+    <script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+    <script src="/FrontEnd/JefeDepartamento/JS/Alumnos.js"></script>
+</body>
+</html>

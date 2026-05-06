@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login AMBAR</title>
+<link rel="stylesheet" href="/FrontEnd/Profesor/CSS/Login.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+<body>
+
+<!-- Ondas de fondo -->
+<div class="onda"></div>
+<div class="onda onda2"></div>
+
+<div class="contenedor-login">
+    <div class="tarjeta-login">
+
+        <h2><i data-lucide="graduation-cap"></i> AMBAR</h2>
+        <p class="subtitulo">Sistema Escolar Universitario</p>
+
+        <form id="formLoginDocente">
+
+            <div class="grupo-input">
+                <label>Número de Control</label>
+                <div class="input-icono">
+                    <i data-lucide="id-card"></i>
+                    <input type="text" id="idProfesor" placeholder="Ej. 22211863" required>
+                </div>
+            </div>
+
+            <div class="grupo-input">
+                <label>Contraseña</label>
+                <div class="input-icono">
+                    <i data-lucide="lock"></i>
+                    <input type="password" id="contrasena" placeholder="••••••••" required>
+                    <span onclick="togglePassword()">
+                        <i data-lucide="eye"></i>
+                    </span>
+                </div>
+            </div>
+            
+            <!-- MENSAJE DE ERROR -->
+            <p id="mensajeError" style="color: #dc2626; font-size: 14px; text-align: center; display: none; margin-bottom: 15px; font-weight: 500;">Número de control o contraseña incorrectos.</p>
+
+            <button type="submit" class="boton-login">
+                <i></i> Iniciar sesión
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+function togglePassword(){
+    const input = document.getElementById("contrasena");
+    input.type = input.type === "password" ? "text" : "password";
+}
+lucide.createIcons();
+</script>
+
+
+<script defer src="/FrontEnd/Profesor/JS/Login.js"></script>
+
+</body>
+</html>

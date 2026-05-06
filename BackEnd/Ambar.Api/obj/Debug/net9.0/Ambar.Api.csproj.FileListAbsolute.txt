@@ -71,3 +71,4 @@ C:\Ambar\Backend\Ambar.Api\obj\Debug\net9.0\refint\Ambar.Api.dll
 C:\Ambar\Backend\Ambar.Api\obj\Debug\net9.0\Ambar.Api.pdb
 C:\Ambar\Backend\Ambar.Api\obj\Debug\net9.0\Ambar.Api.genruntimeconfig.cache
 C:\Ambar\Backend\Ambar.Api\obj\Debug\net9.0\ref\Ambar.Api.dll
+C:\Ambar\BackEnd\Ambar.Api\obj\Debug\net9.0\Ambar.Api.sourcelink.json

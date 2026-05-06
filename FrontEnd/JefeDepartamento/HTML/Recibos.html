@@ -23,18 +23,15 @@
             <div class="filtros">
                 <select id="filtroCarrera">
                     <option value="">Carrera</option>
-                    <option value="info">Ingeniería Informática</option>
-                    <option value="ind">Industrial</option>
                 </select>
 
                 <select id="filtroSemestre">
                     <option value="">Semestre</option>
-                    <option value="1">1°</option>
-                    <option value="2">2°</option>
-                    <option value="3">3°</option>
                 </select>
 
-                <button class="btn-filtrar" onclick="filtrar()">Filtrar</button>
+                
+                
+                <button class="btn-agregar" onclick="abrirModalRecibo()" style="background: #1bbf5c; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold;">+ Generar Recibo</button>
 
                 <input type="text" id="busqueda" placeholder="Buscar por número de control">
             </div>
@@ -64,6 +61,38 @@
 
         </div>
     </main>
+
+    <!-- MODAL GENERAR RECIBO -->
+    <div id="modalRecibo" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+            <h3 style="color:#1a237e; margin-bottom:10px;">Generar Ficha de Pago</h3>
+            <p style="color:#64748b; font-size:14px; margin-bottom:20px;">Ingresa el ID del Alumno para generarle un nuevo recibo en el sistema.</p>
+            
+            <input type="number" id="idAlumnoRecibo" placeholder="Ej. 1" style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; margin-bottom:20px;">
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button onclick="cerrarModalRecibo()" style="padding: 10px 20px; border-radius: 8px; border: none; background: #f1f5f9; color: #64748b; font-weight: bold; cursor: pointer;">Cancelar</button>
+                <button onclick="generarRecibo()" style="padding: 10px 20px; background: #1bbf5c; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Generar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DETALLE RECIBO -->
+    <div id="modalDetalleRecibo" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+        <div style="background:white; padding:30px; border-radius:15px; width:90%; max-width:400px; box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+            <h3 style="color:#1a237e; margin-bottom:20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Detalles del Pago</h3>
+            
+            <p style="margin-bottom: 10px; color: #333;"><strong>No. Control:</strong> <span id="detControl"></span></p>
+            <p style="margin-bottom: 10px; color: #333;"><strong>Referencia:</strong> <span id="detReferencia"></span></p>
+            <p style="margin-bottom: 10px; color: #333;"><strong>Carrera:</strong> <span id="detCarrera"></span></p>
+            <p style="margin-bottom: 10px; color: #333;"><strong>Semestre:</strong> <span id="detSemestre"></span>°</p>
+            <p style="margin-bottom: 20px; color: #333;"><strong>Estado:</strong> <span style="color: #1bbf5c; font-weight: bold; background: #e8f5e9; padding: 4px 10px; border-radius: 6px;">PAGADO</span></p>
+            
+            <div style="display: flex; justify-content: flex-end;">
+                <button onclick="cerrarModalDetalle()" style="padding: 10px 20px; background: #1a237e; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Cerrar</button>
+            </div>
+        </div>
+    </div>
 
 <script src="/FrontEnd/JefeDepartamento/JS/Recibos.js"></script>
 <script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>

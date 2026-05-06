@@ -1,0 +1,187 @@
+:root{
+  --azul-principal:#0b2e59;
+  --azul-secundario:#1e4d8f;
+  --acento:#2f7df6;
+  --fondo:#f4f7fb;
+  --blanco:#ffffff;
+  --gris:#e5e7eb;
+  --texto:#1f2937;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height:100vh;
+    font-family:'Segoe UI', sans-serif;
+    background:linear-gradient(135deg, #0b2e59, #1e4d8f, #2f7df6);
+    overflow:hidden;
+}
+
+/* Ondas animadas */
+.onda{
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:rgba(255,255,255,0.05);
+    top:60%;
+    left:-50%;
+    border-radius:40%;
+    animation:moverOnda 12s linear infinite;
+}
+
+.onda2{
+    animation-duration:18s;
+    opacity:0.4;
+}
+
+@keyframes moverOnda{
+    0%{ transform:rotate(0deg); }
+    100%{ transform:rotate(360deg); }
+}
+
+/* Contenedor */
+.contenedor-login{
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    z-index:2;
+}
+
+/* Tarjeta */
+.tarjeta-login{
+    background: rgba(255, 255, 255, 0.83);
+    backdrop-filter: blur(20px);
+    border:1px solid rgba(255,255,255,0.2);
+    padding:45px;
+    width:360px;
+    border-radius:22px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.3);
+    animation:subir .6s ease;
+    text-align:center;
+}
+
+.tarjeta-login h2{
+    margin:0;
+    color:var(--azul-principal);
+}
+
+.subtitulo{
+    font-size:15px;
+    font-weight: 700;
+    color:#35588a;
+    margin-bottom:10px;
+}
+
+/* Inputs */
+.grupo-input{
+    margin:20px 0;
+    text-align:left;
+}
+
+label{
+    font-size:14px;
+    color:#475569;
+    font-weight: 700;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #e2e8f0;
+    margin-top:5px;
+    transition:.3s;
+    background:#f8fafc;
+}
+
+input:focus{
+    border-color:var(--acento);
+    box-shadow:0 0 0 3px rgba(47,125,246,0.2);
+    outline:none;
+}
+.input-icono{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+.input-icono i{
+    position:absolute;
+    left:10px;
+    width:18px;
+    height:18px;
+    color:#64748b;
+}
+
+.input-icono input{
+    padding-left:35px;
+}
+
+.input-icono span{
+    position:absolute;
+    right:10px;
+    cursor:pointer;
+    display:flex;
+}
+
+/* Password */
+.contenedor-password{
+    position:relative;
+}
+
+.contenedor-password span{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+
+/* Botón */
+.boton-login{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg, #0b2e59, #2f7df6);
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    margin-top:10px;
+}
+
+.boton-login:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Olvidar */
+.olvidar{
+    display:block;
+    text-align:right;
+    font-size:12px;
+    color:var(--acento);
+    margin-top:10px;
+    text-decoration:none;
+}
+
+/* Animación */
+@keyframes subir{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1;}
+}
+
+/* Responsive */
+@media(max-width:400px){
+    .tarjeta-login{
+        width:90%;
+        padding:30px;
+    }
+}
