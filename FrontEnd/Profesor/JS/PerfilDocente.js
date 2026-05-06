@@ -1,3 +1,5 @@
+const API_BASE_URL = 'http://localhost:5067';
+
 /**
  * Clase que representa el modelo de datos del Docente.
  */
@@ -23,6 +25,8 @@ class InterfazPerfil {
      * @returns {string} Fragmento HTML
      */
     static generarTemplate(docente) {
+        const fotoSrc = docente.fotoUrl ? `${API_BASE_URL}${docente.fotoUrl}` : '';
+
         return `
         <header class="top-header" style="padding: 20px 30px;">
             <h2 style="font-weight: 600;">Perfil Docente</h2>
@@ -32,8 +36,8 @@ class InterfazPerfil {
             <div class="perfil-flex-container">
                 <div class="card-usuario">
                     <div class="foto-perfil" id="abrir-lightbox">
-                        <i class="fas fa-user-tie" id="icono-usuario" style="${docente.fotoUrl ? 'display:none' : 'display:block; font-size: 50px; margin-top: 60px; color: #ccc;'}"></i>
-                        <img src="${docente.fotoUrl || ''}" alt="Foto Docente" id="foto-preview" style="${docente.fotoUrl ? 'display:block' : 'display:none'}">
+                        <i class="fas fa-user-tie" id="icono-usuario" style="${fotoSrc ? 'display:none' : 'display:block; font-size: 50px; margin-top: 60px; color: #ccc;'}"></i>
+                        <img src="${fotoSrc}" alt="Foto Docente" id="foto-preview" style="${fotoSrc ? 'display:block' : 'display:none'}">
                     </div>
                     <button id="btn-cambiar-foto" class="btn-subir-foto"><i class='bx bx-camera'></i> Cambiar Foto</button>
                     <input type="file" id="input-archivo" accept="image/*" style="display: none;">
@@ -192,9 +196,10 @@ class GestionPerfil {
     /**
      * Valida los requisitos mínimos de seguridad de la contraseña.
      */
-    validarContrasena() {
-        const nueva = document.getElementById('nuevaPass').value;
-        const confirma = document.getElementById('confirmarPass').value;
+    async validarContrasena() {
+        const actual = document.getElementById('actualPass').value.trim();
+        const nueva = document.getElementById('nuevaPass').value.trim();
+        const confirma = document.getElementById('confirmarPass').value.trim();
 
         if (nueva.length < 8) {
             alert("La nueva contraseña debe tener al menos 8 caracteres.");
@@ -204,48 +209,145 @@ class GestionPerfil {
             alert("Las contraseñas no coinciden.");
             return;
         }
+        if (!actual) {
+            alert("Por favor, ingrese su contraseña actual.");
+            return;
+        }
 
-        alert("¡Éxito! Datos Actualizados en el servidor.");
-        this.limpiarYcerrar();
+        const btnGuardar = document.getElementById('guardarPass');
+        const originalText = btnGuardar.innerText;
+        btnGuardar.disabled = true;
+        btnGuardar.innerText = 'Guardando...';
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/profesores/${this.docente.numControl}/cambiar-contrasena`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contrasenaActual: actual,
+                    nuevaContrasena: nueva,
+                    confirmarContrasena: confirma
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.mensaje || 'Error desconocido del servidor.');
+            }
+
+            alert(result.mensaje);
+            this.limpiarYcerrar();
+
+        } catch (error) {
+            console.error('Error al cambiar la contraseña:', error);
+            alert(`Error: ${error.message}`);
+        } finally {
+            btnGuardar.disabled = false;
+            btnGuardar.innerText = originalText;
+        }
     }
 
     /**
-     * Maneja la lectura del archivo de imagen y actualiza la vista previa.
+     * Maneja la lectura del archivo de imagen, actualiza la vista previa y lo sube al servidor.
      */
-    procesarNuevaFoto(event) {
+    async procesarNuevaFoto(event) {
         const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const resultado = ev.target.result;
-                this.fotoPreview.src = resultado;
-                this.imgGrande.src = resultado;
-                this.fotoPreview.style.display = 'block';
-                this.iconoUsuario.style.display = 'none';
-                
-                // Aquí podrías actualizar el objeto docente:
-                this.docente.fotoUrl = resultado;
-            };
-            reader.readAsDataURL(file);
+        if (!file) return;
+
+        // 1. Mostrar vista previa inmediatamente para una experiencia de usuario fluida
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            this.fotoPreview.src = ev.target.result;
+            this.imgGrande.src = ev.target.result;
+            this.fotoPreview.style.display = 'block';
+            this.iconoUsuario.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+
+        // 2. Subir el archivo al servidor
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const btnFoto = document.getElementById('btn-cambiar-foto');
+        const originalText = btnFoto.innerHTML;
+        btnFoto.disabled = true;
+        btnFoto.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Subiendo...`;
+
+        try {
+            const response = await fetch(`http://localhost:5067/api/profesores/${this.docente.numControl}/foto`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                this.docente.fotoUrl = result.fotoUrl; // Actualizar el estado con la URL relativa del servidor
+                const fullServerUrl = API_BASE_URL + result.fotoUrl;
+                this.fotoPreview.src = fullServerUrl; // Actualizar la vista previa con la URL completa del servidor
+                alert(result.mensaje);
+            } else {
+                throw new Error(result.mensaje || 'Error desconocido al subir la foto.');
+            }
+
+        } catch (error) {
+            console.error('Error al subir la foto:', error);
+            alert(`Error: ${error.message}`);
+            // Revertir la vista previa a la foto original si la subida falla
+            const originalFotoSrc = this.docente.fotoUrl ? `${API_BASE_URL}${this.docente.fotoUrl}` : '';
+            this.fotoPreview.src = originalFotoSrc;
+            if (!originalFotoSrc) {
+                this.fotoPreview.style.display = 'none';
+                this.iconoUsuario.style.display = 'block';
+            }
+        } finally {
+            btnFoto.disabled = false;
+            btnFoto.innerHTML = originalText;
+            event.target.value = ''; // Limpiar el input para permitir seleccionar el mismo archivo de nuevo
         }
     }
 }
 
 // --- INICIALIZACIÓN ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Datos simulados
-    const datosProvisorios = {
-        nombre: "Juan Pérez García",
-        numControl: "DOC-2024-001",
-        departamento: "Sistemas y Computación",
-        correo: "juan.perez@instituto.edu.mx",
-        telefono: "555-0123 ext 456",
-        fotoUrl: "https://randomuser.me/api/portraits/men/32.jpg"
-    };
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Verificar si hay una sesión activa
+    const sesionJSON = localStorage.getItem("profesorSesion");
+    if (!sesionJSON) {
+        // Si no hay sesión, redirigir al login de profesores
+        // Usamos una ruta absoluta para más seguridad
+        window.location.href = "/FrontEnd/Profesor/HTML/LoginProfesor.html"; 
+        return;
+    }
 
-    // Crear instancia del modelo
-    const profesor = new Docente(datosProvisorios);
+    const sesion = JSON.parse(sesionJSON);
+    const profesorId = sesion.id; // Obtenemos el ID guardado en el login (debe ser minúscula)
 
-    // Iniciar el controlador
-    new GestionPerfil(profesor);
+    const mainContainer = document.querySelector('.main-content');
+    if (!mainContainer) return;
+
+    try {
+        // Mostrar un estado de carga mientras se obtienen los datos
+        mainContainer.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando perfil...</p>';
+
+        // 2. Hacer la petición al backend para obtener los detalles completos del perfil
+        const response = await fetch(`http://localhost:5067/api/profesores/${profesorId}`);
+        
+        if (!response.ok) {
+            // Intentamos leer el mensaje de error de la API
+            const errorData = await response.json().catch(() => null);
+            const mensaje = errorData?.mensaje || `Error del servidor: ${response.status}`;
+            throw new Error(mensaje);
+        }
+
+        const datosPerfil = await response.json();
+
+        // 3. Crear la instancia del modelo con los datos reales y iniciar el controlador
+        const profesor = new Docente(datosPerfil);
+        new GestionPerfil(profesor);
+
+    } catch (error) {
+        console.error("Error al cargar el perfil del docente:", error);
+        mainContainer.innerHTML = `<p style="text-align:center; padding: 40px; color: red;">No se pudo cargar la información del perfil. ${error.message}</p>`;
+    }
 });
