@@ -11,10 +11,12 @@ namespace Ambar.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAlumnoRepository _alumnoRepo;
+        private readonly IProfesorRepository _profesorRepo;
 
-        public AuthController(IAlumnoRepository alumnoRepo)
+        public AuthController(IAlumnoRepository alumnoRepo, IProfesorRepository profesorRepo)
         {
             _alumnoRepo = alumnoRepo;
+            _profesorRepo = profesorRepo;
         }
 
         [HttpPost("alumno/login")]
@@ -59,6 +61,35 @@ namespace Ambar.Api.Controllers
                     Cp = alumno.Codigo_Postal ?? "No especificado",
                     DireccionFoto = alumno.Direccion_Foto,
                     Rol = "Alumno"
+                }
+            });
+        }
+
+        [HttpPost("profesor/login")]
+        public async Task<IActionResult> LoginProfesor([FromBody] LoginProfesorRequest request)
+        {
+            // En tu BD, el ID_Profesor funciona como el Número de Empleado
+            if (!int.TryParse(request.NumeroEmpleado, out int idProfesor))
+            {
+                return BadRequest(new LoginResponse { Success = false, Mensaje = "El número de empleado debe ser numérico." });
+            }
+
+            var profesor = await _profesorRepo.LoginAsync(idProfesor, request.Contrasena);
+
+            if (profesor == null)
+            {
+                return Unauthorized(new LoginResponse { Success = false, Mensaje = "Número de empleado o contraseña incorrectos." });
+            }
+
+            return Ok(new LoginResponse 
+            { 
+                Success = true, 
+                Mensaje = "Sesión iniciada correctamente.",
+                Usuario = new 
+                {
+                    Id = profesor.ID_Profesor,
+                    NombreCompleto = $"{profesor.Nombre} {profesor.Primer_Apellido} {profesor.Segundo_Apellido}".Trim(),
+                    IdRol = profesor.ID_Rol // Enviamos el rol para que el JS sepa a qué pantalla redirigir
                 }
             });
         }

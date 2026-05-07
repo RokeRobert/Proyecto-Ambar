@@ -1,0 +1,56 @@
+/* Para Carga de Alumnos: Los estilos de los paneles dobles y las tarjetas de materias.*/
+/* --- Se utiliza en AlumnoMaterias.js,  --- */
+
+.panel-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.grid-gestion {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.card-gestion {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #eee;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-pro); /* Animación clave */
+}
+
+.card-gestion:hover {
+    transform: translateY(-8px) scale(1.01); /* Movimiento hacia arriba y escala */
+    box-shadow: var(--shadow-strong); /* Sombra más profunda */
+    border-color: var(--azul-obscuro);
+}
+
+.card-gestion.materia-ok { border-left-color: #2e7d32; }
+
+.lista-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-add { background: #2e7d32; color: white; border: none; padding: 5px 10px; border-radius: 4px; }
+/* Botones de eliminar dentro de la lista */
+.btn-delete-item {
+    transition: var(--transition-pro);
+    border-radius: 50%; /* Circulares se ven más pro */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete-item:hover {
+    background-color: #ffebed;
+    color: #d32f2f;
+    transform: rotate(90deg); /* Gira al poner el mouse */
+}

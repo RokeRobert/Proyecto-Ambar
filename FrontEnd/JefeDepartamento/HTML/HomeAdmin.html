@@ -18,8 +18,8 @@
 <div class="filtros-globales">
     <select id="filtroCarrera" onchange="filtrarDashboard()">
         <option value="todas">Todas las carreras</option>
-        <option value="1">Ingeniería Informática</option>
-        <option value="2">Ingeniería Industrial</option>
+        <option value="info">Ingeniería Informática</option>
+        <option value="ind">Ingeniería Industrial</option>
     </select>
 </div>
 
@@ -60,9 +60,24 @@
 
     </div>
 
+    <!-- GRÁFICAS -->
+    <div class="graficas">
+
+        <div class="grafica-card">
+            <h3>Estado de Pagos</h3>
+            <canvas id="graficaPagos"></canvas>
+        </div>
+
+        <div class="grafica-card">
+            <h3>Créditos Complementarios</h3>
+            <canvas id="graficaCreditos"></canvas>
+        </div>
+
+    </div>
 </div>
 </main>
 <script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
 <script src="/FrontEnd/JefeDepartamento/JS/Home.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

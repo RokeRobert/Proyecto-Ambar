@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\cvero\\OneDrive\\Desktop\\ProyectoAmbar-Clonado\\BackEnd\\Ambar.Api\\wwwroot\\images\\profiles\\7.jpeg",
+      "PackagePath": "staticwebassets\\images\\profiles\\7.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\cvero\\OneDrive\\Desktop\\ProyectoAmbar-Clonado\\BackEnd\\Ambar.Api\\wwwroot\\uploads\\documentos\\tickets\\6_ticket_639129264763031218.png",
+      "PackagePath": "staticwebassets\\uploads\\documentos\\tickets\\6_ticket_639129264763031218.png"
+    },
+    {
+      "Id": "C:\\Users\\cvero\\OneDrive\\Desktop\\ProyectoAmbar-Clonado\\BackEnd\\Ambar.Api\\wwwroot\\uploads\\documentos\\tickets\\6_ticket_639129265263421122.png",
+      "PackagePath": "staticwebassets\\uploads\\documentos\\tickets\\6_ticket_639129265263421122.png"
+    },
+    {
+      "Id": "C:\\Users\\cvero\\OneDrive\\Desktop\\ProyectoAmbar-Clonado\\BackEnd\\Ambar.Api\\wwwroot\\uploads\\documentos\\tickets\\6_ticket_639129275933816928.png",
+      "PackagePath": "staticwebassets\\uploads\\documentos\\tickets\\6_ticket_639129275933816928.png"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.Ambar.Api.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.Ambar.Api.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.Ambar.Api.props",
+      "PackagePath": "build\\Ambar.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.Ambar.Api.props",
+      "PackagePath": "buildMultiTargeting\\Ambar.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.Ambar.Api.props",
+      "PackagePath": "buildTransitive\\Ambar.Api.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

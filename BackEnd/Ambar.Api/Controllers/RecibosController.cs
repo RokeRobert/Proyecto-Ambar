@@ -16,23 +16,5 @@ namespace Ambar.Api.Controllers
             var recibos = await _repo.GetRecibosByAlumnoAsync(idAlumno);
             return Ok(recibos);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAdmin()
-        {
-            return Ok(await _repo.GetRecibosAdminAsync());
-        }
-
-        [HttpPut("pagar/{id}")]
-        public async Task<IActionResult> Pagar(int id)
-        {
-            return await _repo.MarcarPagadoAsync(id) ? Ok(new { success = true }) : BadRequest("Error.");
-        }
-
-        [HttpPost("generar/{idAlumno}")]
-        public async Task<IActionResult> Generar(int idAlumno)
-        {
-            return await _repo.GenerarReciboPruebaAsync(idAlumno) ? Ok(new { success = true }) : BadRequest("Error.");
-        }
     }
 }

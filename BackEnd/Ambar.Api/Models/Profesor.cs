@@ -12,5 +12,11 @@ namespace Ambar.Api.Models
         public string Contrasena { get; set; } = string.Empty;
         public int ID_Rol { get; set; }
         public string Direccion_Foto { get; set; } = string.Empty;
+
+        // Propiedades adicionales para la página de perfil
+        public string Departamento { get; set; } = string.Empty;
+        public string Correo { get; set; } = string.Empty;
+        public string Telefono { get; set; } = string.Empty;
+        public string FotoUrl { get; set; } = string.Empty;
     }
 }
