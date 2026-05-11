@@ -24,6 +24,10 @@ class SidebarMenu extends HTMLElement {
                         <i data-lucide="book-open"></i>
                         <span>Guía de uso</span>
                     </a>
+                    <a href="#" class="menu-item" id="btn-cerrar-sesion-menu" style="color: #e53935; margin-top: 10px;">
+                        <i data-lucide="log-out"></i>
+                        <span>Cerrar Sesión</span>
+                    </a>
                 </div>
             </aside>
         `;
@@ -37,6 +41,18 @@ class SidebarMenu extends HTMLElement {
                 link.classList.add('activo'); // Tu clase CSS para el enlace seleccionado
             }
         });
+
+        // Evento para Cerrar Sesión desde cualquier pantalla
+        const btnCerrarSesion = this.querySelector('#btn-cerrar-sesion-menu');
+        if (btnCerrarSesion) {
+            btnCerrarSesion.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                    localStorage.removeItem("alumnoSesion");
+                    window.location.href = "Login.html";
+                }
+            });
+        }
 
         // Inicializar los íconos de Lucide en toda la página
         if (typeof lucide !== 'undefined') {

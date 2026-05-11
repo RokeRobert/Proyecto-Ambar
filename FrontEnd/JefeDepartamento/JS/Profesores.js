@@ -139,10 +139,11 @@ window.generarCorreoProfesor = function() {
 }
 
 window.cambiarRolProfesor = function() {
-    const rol = document.getElementById("pr_rol").value;
     const contCarrera = document.getElementById("pr_carrera_container");
-    if (rol === "2") { contCarrera.style.display = "block"; } 
-    else { contCarrera.style.display = "none"; document.getElementById("pr_carrera").value = ""; }
+    // Ya no requerimos seleccionar carrera manualmente, C# lo cruza con el Departamento
+    if (contCarrera) { contCarrera.style.display = "none"; }
+    const selectCarrera = document.getElementById("pr_carrera");
+    if (selectCarrera) { selectCarrera.value = ""; }
 }
 
 window.guardarUsuario = async function() {
@@ -155,7 +156,6 @@ window.guardarUsuario = async function() {
         fechaIngreso: document.getElementById("pr_fechaIngreso").value || new Date().toISOString(),
         idDepartamento: parseInt(document.getElementById("pr_departamento").value) || 0,
         idRol: idRol,
-        idCarreraCoordinada: idRol === 2 ? (parseInt(document.getElementById("pr_carrera").value) || null) : null,
         contrasena: document.getElementById("pr_pass").value || "temporal123"
     };
 
@@ -183,7 +183,9 @@ window.editarUsuario = async function(id) {
             document.getElementById("pr_fechaIngreso").value = p.fechaIngreso ? p.fechaIngreso.split('T')[0] : "";
             document.getElementById("pr_departamento").value = p.idDepartamento;
             document.getElementById("pr_rol").value = p.idRol;
-            document.getElementById("pr_carrera").value = p.idCarreraCoordinada || "";
+            
+            const selectCarrera = document.getElementById("pr_carrera");
+            if(selectCarrera) selectCarrera.value = "";
             document.getElementById("pr_pass").value = ""; 
             cambiarRolProfesor();
             document.getElementById("modalUsuario").style.display = "flex";

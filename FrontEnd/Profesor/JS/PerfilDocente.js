@@ -9,7 +9,6 @@ class Docente {
         this.numControl = datos.numControl;
         this.departamento = datos.departamento;
         this.correo = datos.correo;
-        this.telefono = datos.telefono;
         this.fotoUrl = datos.fotoUrl;
         this.activo = true;
     }
@@ -55,10 +54,6 @@ class InterfazPerfil {
                         <div class="form-group">
                             <label>Correo Institucional</label>
                             <input type="text" value="${docente.correo}" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label>Teléfono / Extensión</label>
-                            <input type="text" value="${docente.telefono}" readonly>
                         </div>
                     </div>
 

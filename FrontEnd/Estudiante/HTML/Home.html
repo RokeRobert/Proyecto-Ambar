@@ -28,7 +28,7 @@
                     Cambiar contraseña
                 </button>
 
-                <button class="logout">
+                <button class="logout" onclick="abrirLogout()">
                     <i data-lucide="log-out"></i>
                     Cerrar sesión
                 </button>
@@ -77,7 +77,7 @@
 
                 <div class="acciones">
                     <button class="btn cancelar" onclick="cerrarPassword()">Cancelar</button>
-                    <button class="btn">Confirmar</button>
+                    <button class="btn" id="btnGuardarPassword">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -91,7 +91,9 @@
 
             <div class="overlay">
                 <button onclick="abrirImagen()">Ver</button>
+                <button onclick="document.getElementById('inputFotoPerfil').click()">Cambiar</button>
             </div>
+            <input type="file" id="inputFotoPerfil" accept="image/*" style="display: none;">
         </div>
 
         <!-- MODAL IMAGEN -->

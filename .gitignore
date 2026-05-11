@@ -1,0 +1,8 @@
+# Ignorar carpetas de compilación de C# (.NET)
+**/bin/
+**/obj/
+
+# Ignorar configuraciones locales de editores
+.vscode/
+.vs/
+appsettings.Development.json

@@ -28,6 +28,7 @@ namespace Ambar.Api.Repositories
                     CAST(g.ID_Grupo AS VARCHAR) AS Grupo,
                     ISNULL(m.Total_Creditos, 0) AS Creditos,
                     g.ID_Periodo AS IdPeriodo,
+                    m.Unidad,
                     ga.UNIDAD1 AS U1, ga.UNIDAD2 AS U2, ga.UNIDAD3 AS U3,
                     ga.UNIDAD4 AS U4, ga.UNIDAD5 AS U5, ga.UNIDAD6 AS U6
                 FROM grupos_alumnos ga

@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (datos.success) {
                     errorMsg.style.display = "none";
+                    
+                    // Convertimos la URL de la foto a absoluta si viene como ruta relativa
+                    if (datos.usuario && datos.usuario.direccionFoto && !datos.usuario.direccionFoto.startsWith("http")) {
+                        datos.usuario.direccionFoto = `http://localhost:5067${datos.usuario.direccionFoto}`;
+                    }
+
                     // Guardamos temporalmente los datos del alumno (como Nombre y ID) para usarlos en el Home
                     localStorage.setItem("alumnoSesion", JSON.stringify(datos.usuario));
                     window.location.href = "Home.html"; // Redirigimos al inicio

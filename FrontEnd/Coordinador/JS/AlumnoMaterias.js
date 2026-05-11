@@ -58,7 +58,10 @@ GestionCoordinador.prototype.buscarAlumno = async function() {
     sugerencias.innerHTML = "";
 
     try {
-        const response = await fetch(`http://localhost:5067/api/coordinador/alumnos/buscar?termino=${encodeURIComponent(input)}`);
+        const sesion = JSON.parse(localStorage.getItem("profesorSesion") || "{}");
+        const idCoordinador = sesion.id || 0;
+
+        const response = await fetch(`http://localhost:5067/api/coordinador/alumnos/buscar/${idCoordinador}?termino=${encodeURIComponent(input)}`);
         if (!response.ok) {
             throw new Error('Error en la búsqueda de alumnos.');
         }
@@ -66,7 +69,7 @@ GestionCoordinador.prototype.buscarAlumno = async function() {
 
         if (resultados.length === 0) {
             mensaje.innerHTML = `<p style="color: #c62828;">No se encontraron alumnos que coincidan con "${input}".</p>`;
-        } else if (resultados.length === 1) {
+        } else if (resultados.length === 1 && resultados[0].control === input) {
             sugerencias.innerHTML = "";
             this.mostrarFichaAlumno(resultados[0].id);
         } else {

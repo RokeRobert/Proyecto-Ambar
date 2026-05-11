@@ -39,17 +39,34 @@ async function cargarDatosHome(alumno) {
 
     // CÁLCULO DE PROMEDIOS (Históricos)
     try {
-        const respuesta = await fetch(`http://localhost:5067/api/calificacion/alumno/${alumno.id}`);
+        const respuesta = await fetch(`http://localhost:5067/api/kardex/alumno/${alumno.id}`);
         if (respuesta.ok) {
             const todasMaterias = await respuesta.json();
             
-            // Pre-procesar materias para sacar su promedio final
+            // 1. Identificamos cuál es el último periodo (Carga Actual)
+            const periodosInscritos = todasMaterias.map(m => m.idPeriodo).filter(p => p !== null);
+            const periodoFiltro = periodosInscritos.length > 0 ? Math.max(...periodosInscritos) : (alumno.periodoActual || 2);
+
+            // 2. Pre-procesar materias para sacar su promedio final
             const cursadas = todasMaterias.map(m => {
-                const unidades = [m.u1, m.u2, m.u3, m.u4, m.u5, m.u6].filter(u => u !== null);
+                const limiteUnidades = m.unidad || m.Unidad || m.unidades || 6;
+                const unidades = [];
+                for(let i = 1; i <= limiteUnidades; i++) {
+                    const val = m[`u${i}`] ?? m[`U${i}`];
+                    if (val !== null && val !== undefined && val !== "") unidades.push(parseFloat(val));
+                }
+
                 let final = 0;
                 if (unidades.length > 0) final = Math.round(unidades.reduce((a, b) => a + b, 0) / unidades.length);
                 return { ...m, final };
-            }).filter(m => m.final > 0); // Excluir materias que aún no tienen calificaciones registradas
+            }).filter(m => {
+                const estaTerminada = (m.idEstatus == 2 || m.id_estatus == 2 || m.estatus == 2 || m.Estatus == 2);
+                // Es "Carga Actual" si pertenece al último periodo y NO está terminada
+                const esCargaActual = (m.idPeriodo === periodoFiltro) && !estaTerminada;
+                
+                // Solo conservamos las materias que NO son carga actual y que tienen un periodo válido
+                return m.idPeriodo !== null && !esCargaActual;
+            });
 
             // 1. Promedio CON reprobadas (Todas las materias)
             const promCon = cursadas.length > 0 ? (cursadas.reduce((acc, m) => acc + m.final, 0) / cursadas.length) : 0;
@@ -84,9 +101,24 @@ async function cargarDatosHome(alumno) {
     document.getElementById("home-calle").textContent = alumno.calle;
     document.getElementById("home-cp").textContent = alumno.cp;
 
-    // Pestaña Carga Académica (Simulado hasta el módulo de Carga)
-    document.getElementById("home-fecha-carga").textContent = "16/01/2026";
-    document.getElementById("home-hora-carga").textContent = "14:00";
+    // Pestaña Carga Académica - Consulta al Semáforo Real
+    try {
+        const resSemaforo = await fetch(`http://localhost:5067/api/semaforo/alumno/${alumno.id}`);
+        if (resSemaforo.ok) {
+            const dataTurno = await resSemaforo.json();
+            if (dataTurno.tieneTurno) {
+                const fInicio = new Date(dataTurno.fechaInicio);
+                document.getElementById("home-fecha-carga").textContent = fInicio.toLocaleDateString('es-MX');
+                document.getElementById("home-hora-carga").textContent = fInicio.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+            } else {
+                document.getElementById("home-fecha-carga").textContent = "Sin asignar";
+                document.getElementById("home-hora-carga").textContent = "--:--";
+            }
+        }
+    } catch (e) {
+        document.getElementById("home-fecha-carga").textContent = "Error de conexión";
+        document.getElementById("home-hora-carga").textContent = "--:--";
+    }
     document.getElementById("home-adeudos").textContent = "No cuenta con adeudos";
 }
 
@@ -112,12 +144,96 @@ function inicializarTabs() {
 // 5. FUNCIONALIDAD DE MODALES
 // ==========================================
 function inicializarEventos() {
-    document.querySelector(".logout").addEventListener("click", () => document.getElementById("modalLogout").style.display = "flex");
+    const btnLogout = document.querySelector(".logout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", () => document.getElementById("modalLogout").style.display = "flex");
+    }
+
+    const API_BASE_URL = 'http://localhost:5067';
+    const sesionJSON = localStorage.getItem("alumnoSesion");
+    if (!sesionJSON) return; 
+    const alumnoSesion = JSON.parse(sesionJSON);
+
+    // ==========================================
+    // 📸 LÓGICA PARA CAMBIAR FOTO DE PERFIL
+    // ==========================================
+    const inputArchivo = document.getElementById('inputFotoPerfil');
+    const fotoPreview = document.getElementById('fotoPerfil');
+
+    if (inputArchivo) {
+        inputArchivo.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Vista previa local rápida
+            const reader = new FileReader();
+            reader.onload = (e) => { if (fotoPreview) fotoPreview.src = e.target.result; };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/alumnos/${alumnoSesion.id}/foto`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert(result.mensaje);
+                    // Actualizamos memoria y recargamos vista
+                    alumnoSesion.direccionFoto = `${API_BASE_URL}${result.fotoUrl}`;
+                    localStorage.setItem("alumnoSesion", JSON.stringify(alumnoSesion));
+                    cargarDatosHome(alumnoSesion);
+                } else throw new Error(result.mensaje);
+            } catch (error) {
+                alert(`Error al subir foto: ${error.message}`);
+                // Si falla, regresamos a la foto anterior
+                fotoPreview.src = alumnoSesion.direccionFoto || "https://i.pinimg.com/736x/cc/ec/06/ccec06bfcef089196f335c17e837b9eb.jpg";
+            } finally { event.target.value = ''; }
+        });
+    }
+
+    // ==========================================
+    // 🔒 LÓGICA PARA CAMBIAR CONTRASEÑA
+    // ==========================================
+    const btnGuardarPass = document.getElementById('btnGuardarPassword');
+    if (btnGuardarPass) {
+        btnGuardarPass.addEventListener('click', async () => {
+            const actual = document.getElementById('actual').value.trim();
+            const nueva = document.getElementById('nueva').value.trim();
+            const confirma = document.getElementById('confirmar').value.trim();
+
+            if (nueva.length < 8) return alert("La nueva contraseña debe tener al menos 8 caracteres.");
+            if (nueva !== confirma) return alert("Las contraseñas no coinciden.");
+            if (!actual) return alert("Por favor, ingrese su contraseña actual.");
+
+            const textoOriginal = btnGuardarPass.innerText;
+            btnGuardarPass.disabled = true;
+            btnGuardarPass.innerText = 'Guardando...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/alumnos/${alumnoSesion.id}/cambiar-contrasena`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contrasenaActual: actual, nuevaContrasena: nueva, confirmarContrasena: confirma })
+                });
+                const result = await response.json();
+                if (result.success) { alert(result.mensaje); cerrarPassword(); } 
+                else throw new Error(result.mensaje);
+            } catch (error) { alert(`Error: ${error.message}`); } 
+            finally { btnGuardarPass.disabled = false; btnGuardarPass.innerText = textoOriginal; }
+        });
+    }
 }
 window.cerrarLogout = () => document.getElementById("modalLogout").style.display = "none";
 window.ejecutarLogout = () => window.location.href = "Login.html";
 window.abrirPassword = () => document.getElementById("modalPassword").style.display = "flex";
-window.cerrarPassword = () => document.getElementById("modalPassword").style.display = "none";
+window.cerrarPassword = () => { 
+    document.getElementById("modalPassword").style.display = "none"; 
+    document.getElementById("actual").value = ''; 
+    document.getElementById("nueva").value = ''; 
+    document.getElementById("confirmar").value = ''; 
+}
 window.abrirImagen = () => { document.getElementById("imgGrande").src = document.getElementById("fotoPerfil").src; document.getElementById("modalImagen").style.display = "flex"; }
 window.cerrarImagen = () => document.getElementById("modalImagen").style.display = "none";
 

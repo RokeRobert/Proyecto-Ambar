@@ -1,14 +1,3 @@
-body{ 
-    background:#f4f6fb;
-    font-family:'Segoe UI', sans-serif;
-}
-
-/* CONTENIDO */
-.main-content{
-    margin-left:240px;
-    padding:30px;
-}
-
 /* CONTENEDOR */
 .tickets-admin{
     background:white;

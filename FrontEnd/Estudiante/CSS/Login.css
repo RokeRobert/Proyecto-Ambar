@@ -16,6 +16,35 @@ body{
     overflow:hidden;
 }
 
+
+/* Estilo para el botón de regresar a Módulos */
+.btn-regresar {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background-color: #f1f5f9; /* Un color neutro */
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px; /* Estilo píldora */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.btn-regresar:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+
 /* Ondas animadas */
 .onda{
     position:absolute;

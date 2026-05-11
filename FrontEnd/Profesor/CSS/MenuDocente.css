@@ -19,6 +19,8 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-color: #f4f6fb;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* BARRA LATERAL */
@@ -228,3 +230,121 @@ body {
     margin-left: var(--sidebar-collapsed);
     width: calc(100% - var(--sidebar-collapsed));
 }
+
+/* ========================================= */
+/* --- SUBMENÚS COLAPSABLES (ACORDEÓN) --- */
+/* ========================================= */
+.nav-section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-top: 10px;
+    color: #8fa3b5;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transicion);
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+}
+.nav-section-title:hover { color: var(--blanco); background-color: rgba(0, 0, 0, 0.25); }
+.nav-section.open > .nav-section-title { color: var(--blanco); background-color: rgba(0, 0, 0, 0.25); }
+.nav-section-title .chevron { font-size: 16px; transition: transform 0.3s; }
+.nav-section.open > .nav-section-title .chevron { transform: rotate(180deg); }
+
+.nav-section-items {
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+.nav-section.open > .nav-section-items { max-height: 1000px; }
+
+/* Comportamiento al cerrar el menú principal */
+.sidebar.close .nav-section-title { justify-content: center; padding: 12px 0; }
+.sidebar.close .nav-section-title .title-text,
+.sidebar.close .nav-section-title .chevron { display: none; }
+.sidebar.close .nav-section-title div { gap: 0 !important; }
+
+/* ========================================= */
+/* --- SUBSECCIONES (NIVEL 2) --- */
+/* ========================================= */
+.nav-subsection { margin-bottom: 8px; }
+.nav-subsection-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.7);
+    border-radius: 12px;
+    transition: var(--transicion);
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+.nav-subsection-title:hover {
+    background-color: var(--blanco);
+    color: var(--azul-obscuro);
+}
+.nav-subsection-title div i { font-size: 1.5rem; min-width: 30px; text-align: center; }
+.nav-subsection.open .nav-subsection-title { background-color: rgba(0, 0, 0, 0.25); color: var(--blanco); }
+.nav-subsection-title .chevron { font-size: 16px; transition: transform 0.3s; margin-left: auto; }
+.nav-subsection.open > .nav-subsection-title .chevron { transform: rotate(180deg); }
+.nav-subsection-items {
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding-left: 20px;
+}
+.nav-subsection.open .nav-subsection-items { max-height: 400px; margin-top: 5px; }
+
+.sidebar.close .nav-subsection-title .chevron,
+.sidebar.close .nav-subsection-title span { display: none; }
+.sidebar.close .nav-subsection-title { justify-content: center; padding: 12px 0; }
+.sidebar.close .nav-subsection-title div { gap: 0 !important; }
+.sidebar.close .nav-subsection-items { padding-left: 0; }
+
+/* ========================================= */
+/* --- ESTILOS RESTAURADOS DEL TOPBAR --- */
+/* ========================================= */
+#topbar {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.perfil .info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+.perfil .nombre { font-weight: bold; font-size: 14px; color: #0b2a4a; }
+.perfil small { font-size: 12px; color: #777; }
+.avatar {
+    width: 35px; height: 35px;
+    background: #0b2a4a; color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+}
+.titulo-vista { font-size: 20px; color: #0b2a4a; margin: 0; }

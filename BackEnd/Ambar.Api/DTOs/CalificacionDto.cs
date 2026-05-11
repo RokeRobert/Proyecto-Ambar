@@ -14,5 +14,6 @@ namespace Ambar.Api.DTOs
         public int? U4 { get; set; }
         public int? U5 { get; set; }
         public int? U6 { get; set; }
+        public int Unidad { get; set; }
     }
 }

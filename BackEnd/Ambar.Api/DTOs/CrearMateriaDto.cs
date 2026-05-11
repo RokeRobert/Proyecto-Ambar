@@ -8,5 +8,6 @@ namespace Ambar.Api.DTOs
         public int? IdCarrera { get; set; }
         public int? IdEspecialidad { get; set; }
         public int? IdMateriaRequisito { get; set; }
+        public int Unidad { get; set; } = 6;
     }
 }

@@ -21,9 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 5. ASIGNAR EVENTOS A BOTONES PRINCIPALES
     document.getElementById("btn-cargar").addEventListener("click", cargarAlumnos);
     document.getElementById("btn-guardar").addEventListener("click", guardarCalificaciones);
-    document.getElementById("btn-finalizar").addEventListener("click", () => {
-        alert("Función para finalizar calificaciones no implementada en este ejemplo.");
-    });
 });
 
 /**
@@ -71,7 +68,6 @@ function renderizarEstructura() {
 
         <div class="actions fade-in">
             <button class="save" id="btn-guardar"><i class='bx bx-save'></i> Guardar Cambios</button>
-            <button class="finalize" id="btn-finalizar"><i class='bx bx-check-double'></i> Finalizar Captura</button>
         </div>
 
         <div class="status-box">
@@ -97,8 +93,8 @@ async function cargarGrupos(profesorId) {
         if (grupos.length > 0) {
             select.innerHTML = '<option value="" disabled selected>Seleccionar Materia - Grupo</option>';
             grupos.forEach(grupo => {
-                // El DTO devuelve IdGrupo y NombreGrupo. Usaremos IdGrupo como value.
-                select.innerHTML += `<option value="${grupo.idGrupo}">${grupo.nombreGrupo}</option>`;
+                // Guardamos la cantidad de unidades en un data-attribute
+                select.innerHTML += `<option value="${grupo.idGrupo}" data-unidades="${grupo.unidad}">${grupo.nombreGrupo}</option>`;
             });
         } else {
             select.innerHTML = '<option value="" disabled selected>No tienes grupos asignados</option>';
@@ -125,9 +121,21 @@ async function cargarAlumnos() {
         return;
     }
 
-    const nombreGrupo = select.options[select.selectedIndex].text;
+    const option = select.options[select.selectedIndex];
+    const nombreGrupo = option.text;
+    const unidades = parseInt(option.getAttribute("data-unidades")) || 6;
+
     titulo.textContent = `Lista de alumnos - ${nombreGrupo}`;
     tablaBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Cargando...</td></tr>';
+
+    // Actualizamos los encabezados dinámicamente según la cantidad de unidades
+    const theadTr = document.querySelector("#dynamic-render table thead tr");
+    if(theadTr) {
+        let ths = `<th>#</th><th>Nombre</th><th>No. Control</th>`;
+        for(let i = 1; i <= unidades; i++) ths += `<th>P${i}</th>`;
+        ths += `<th>Promedio</th>`;
+        theadTr.innerHTML = ths;
+    }
 
     try {
         const response = await fetch(`http://localhost:5067/api/profesores/grupos/${idGrupo}/alumnos`);
@@ -142,29 +150,20 @@ async function cargarAlumnos() {
         }
 
         tablaBody.innerHTML = alumnos.map((alumno, index) => {
-            // Las calificaciones parciales vienen directamente en el DTO.
-            // Usamos el operador 'nullish coalescing' (??) para mostrar un string vacío si el valor es null o undefined.
-            const p1 = alumno.p1 ?? '';
-            const p2 = alumno.p2 ?? '';
-            const p3 = alumno.p3 ?? '';
-            const p4 = alumno.p4 ?? '';
-            const p5 = alumno.p5 ?? '';
-            const p6 = alumno.p6 ?? '';
-
-            return `
-                <tr data-id-alumno="${alumno.idAlumno}">
-                    <td>${index + 1}</td>
-                    <td class="student-name">${alumno.nombre}</td>
-                    <td>${alumno.idAlumno}</td>
-                    <td><input type="number" class="grade-input p1" min="0" max="100" value="${p1}" placeholder="0"></td>
-                    <td><input type="number" class="grade-input p2" min="0" max="100" value="${p2}" placeholder="0"></td>
-                    <td><input type="number" class="grade-input p3" min="0" max="100" value="${p3}" placeholder="0"></td>
-                    <td><input type="number" class="grade-input p4" min="0" max="100" value="${p4}" placeholder="0"></td>
-                    <td><input type="number" class="grade-input p5" min="0" max="100" value="${p5}" placeholder="0"></td>
-                    <td><input type="number" class="grade-input p6" min="0" max="100" value="${p6}" placeholder="0"></td>
-                    <td><span class="status-pill">--</span></td>
-                </tr>
+            let tds = `
+                <td>${index + 1}</td>
+                <td class="student-name">${alumno.nombre}</td>
+                <td>${alumno.idAlumno}</td>
             `;
+
+            // Renderizamos solo los inputs necesarios
+            for(let i = 1; i <= unidades; i++) {
+                const val = alumno[`p${i}`] ?? '';
+                tds += `<td><input type="number" class="grade-input p${i}" min="0" max="100" value="${val}" placeholder="0"></td>`;
+            }
+
+            tds += `<td><span class="status-pill">--</span></td>`;
+            return `<tr data-id-alumno="${alumno.idAlumno}">${tds}</tr>`;
         }).join('');
 
         activarLogicaCalificaciones();
@@ -190,8 +189,16 @@ function activarLogicaCalificaciones() {
             let suma = 0;
             let contador = 0;
             inputs.forEach(input => {
-                const valor = parseFloat(input.value);
+                let valor = parseFloat(input.value);
                 if (!isNaN(valor)) {
+                    // Limitar calificaciones entre 0 y 100
+                    if (valor > 100) {
+                        input.value = 100;
+                        valor = 100;
+                    } else if (valor < 0) {
+                        input.value = 0;
+                        valor = 0;
+                    }
                     suma += valor;
                     contador++;
                 }
@@ -245,21 +252,21 @@ async function guardarCalificaciones() {
     rows.forEach(row => {
         if (row.dataset.idAlumno) {
             const idAlumno = parseInt(row.dataset.idAlumno);
-            const p1 = row.querySelector(".p1").value;
-            const p2 = row.querySelector(".p2").value;
-            const p3 = row.querySelector(".p3").value;
-            const p4 = row.querySelector(".p4").value;
-            const p5 = row.querySelector(".p5").value;
-            const p6 = row.querySelector(".p6").value;
+            const inputP1 = row.querySelector(".p1");
+            const inputP2 = row.querySelector(".p2");
+            const inputP3 = row.querySelector(".p3");
+            const inputP4 = row.querySelector(".p4");
+            const inputP5 = row.querySelector(".p5");
+            const inputP6 = row.querySelector(".p6");
 
             calificacionesParaGuardar.push({
                 idAlumno: idAlumno,
-                p1: p1 === '' ? null : parseInt(p1, 10),
-                p2: p2 === '' ? null : parseInt(p2, 10),
-                p3: p3 === '' ? null : parseInt(p3, 10),
-                p4: p4 === '' ? null : parseInt(p4, 10),
-                p5: p5 === '' ? null : parseInt(p5, 10),
-                p6: p6 === '' ? null : parseInt(p6, 10)
+                p1: inputP1 && inputP1.value !== '' ? parseInt(inputP1.value, 10) : null,
+                p2: inputP2 && inputP2.value !== '' ? parseInt(inputP2.value, 10) : null,
+                p3: inputP3 && inputP3.value !== '' ? parseInt(inputP3.value, 10) : null,
+                p4: inputP4 && inputP4.value !== '' ? parseInt(inputP4.value, 10) : null,
+                p5: inputP5 && inputP5.value !== '' ? parseInt(inputP5.value, 10) : null,
+                p6: inputP6 && inputP6.value !== '' ? parseInt(inputP6.value, 10) : null
             });
         }
     });

@@ -1,3 +1,4 @@
+#nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Ambar.Api.DTOs;
 using Ambar.Api.Repositories;
@@ -18,7 +19,7 @@ namespace Ambar.Api.DTOs
         public string Nombre { get; set; }
         public string NumControl { get; set; }
         public string Departamento { get; set; }
-        public string Telefono { get; set; }
+        public string Correo { get; set; }
         public string FotoUrl { get; set; }
     }
 
@@ -38,6 +39,7 @@ namespace Ambar.Api.DTOs
     {
         public int IdGrupo { get; set; }
         public string NombreGrupo { get; set; }
+        public int Unidad { get; set; }
     }
 
     public class AlumnoCalificacionDto
@@ -65,6 +67,7 @@ namespace Ambar.Api.DTOs
 
     public class ItemEditorDto
     {
+        public int Unidad { get; set; } = 1;
         public string Titulo { get; set; }
         public string Contenido { get; set; }
     }
@@ -126,6 +129,10 @@ namespace Ambar.Api.Controllers
                 return Unauthorized(new { success = false, mensaje = "Usuario o contraseña incorrectos." });
             }
 
+            // Consultar foto
+            string queryFoto = "SELECT Direccion_Foto FROM dbo.profesores WHERE ID_Profesor = @id";
+            string fotoUrl = await _connection.QueryFirstOrDefaultAsync<string>(queryFoto, new { id = idProfesorInt });
+
             // 3. Traducir el ID_Rol numérico a texto para que el Frontend (Login.js) sepa a dónde redirigir
             string nombreRol = "docente";
             if (profesorBD.ID_Rol == 1) nombreRol = "administrador";
@@ -135,7 +142,7 @@ namespace Ambar.Api.Controllers
                 Id = profesorBD.ID_Profesor, 
                 NombreCompleto = $"{profesorBD.Nombre} {profesorBD.Primer_Apellido} {profesorBD.Segundo_Apellido}".Trim(), 
                 Rol = nombreRol,
-                FotoUrl = profesorBD.FotoUrl
+                FotoUrl = fotoUrl ?? ""
             };
 
             return Ok(new { success = true, profesor = profesorData });
@@ -155,14 +162,18 @@ namespace Ambar.Api.Controllers
                 return NotFound(new { success = false, mensaje = "Profesor no encontrado." });
             }
 
+            // Realizamos una consulta directa para asegurar que el correo y foto se extraigan de la BD
+            string query = "SELECT Correo_Institucional, Direccion_Foto FROM dbo.profesores WHERE ID_Profesor = @id";
+            var datosExtras = await _connection.QueryFirstOrDefaultAsync<dynamic>(query, new { id });
+
             // Mapeamos el modelo de la BD a nuestro DTO para el frontend
             var perfilDto = new ProfesorPerfilDto
             {
                 Nombre = $"{profesor.Nombre} {profesor.Primer_Apellido} {profesor.Segundo_Apellido}".Trim(),
                 NumControl = profesor.ID_Profesor.ToString(),
-                Departamento = profesor.Departamento, // Asumiendo que el modelo de BD tiene estas propiedades
-                Telefono = profesor.Telefono,
-                FotoUrl = profesor.FotoUrl
+                Departamento = "Sistemas y Computación", // Valor por defecto
+                Correo = datosExtras != null && !string.IsNullOrEmpty((string)datosExtras.Correo_Institucional) ? (string)datosExtras.Correo_Institucional : "Sin correo registrado",
+                FotoUrl = datosExtras != null && datosExtras.Direccion_Foto != null ? (string)datosExtras.Direccion_Foto : ""
             };
 
             return Ok(perfilDto);
@@ -240,7 +251,17 @@ namespace Ambar.Api.Controllers
         [HttpGet("{id:int}/grupos")]
         public async Task<IActionResult> GetGrupos(int id)
         {
-            var grupos = await _repo.GetGruposByProfesorAsync(id);
+            // Usamos Dapper directo para asegurar traer la columna Unidades sin depender del repo
+            string query = @"
+                SELECT 
+                    g.ID_Grupo as IdGrupo, 
+                    m.Nombre_Materia + ' - Grupo ' + CAST(g.ID_Grupo AS VARCHAR) as NombreGrupo,
+                    m.Unidad
+                FROM dbo.grupos g
+                JOIN dbo.materias m ON g.ID_Materia = m.ID_Materia
+                WHERE g.ID_Profesor = @id";
+                
+            var grupos = await _connection.QueryAsync<GrupoDocenteDto>(query, new { id });
             return Ok(grupos);
         }
 

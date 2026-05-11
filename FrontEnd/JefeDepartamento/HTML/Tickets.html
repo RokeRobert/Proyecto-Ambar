@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Tickets.css">
-    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Admin.css">
+    <link rel="stylesheet" href="/FrontEnd/Profesor/CSS/MenuDocente.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://unpkg.com/lucide@latest"></script>
     <title>Tickets</title>
 </head>
 <body>
-    <div id="sidebar"></div>
     <main class="main-content">
         <div id="topbar"></div>
             <div class="tickets-admin">
                 <!-- HEADER PRO -->
         <div class="page-header">
             <div>
-                <h2>Gestión de Tickets</h2>
+                <h2>Tickets de Alumnos</h2>
             </div>
         
 
@@ -29,9 +29,7 @@
             <option value="resuelto">Resueltos</option>
         </select>
 
-        <input type="text" id="busqueda" placeholder="Buscar alumno...">
-
-        <button onclick="filtrar()" class="btn-filtrar">Filtrar</button>
+            <input type="text" id="busqueda" placeholder="Buscar por nombre o ID...">
     </div>
     </div>
 
@@ -39,7 +37,7 @@
     <table class="tabla-tickets">
         <thead>
             <tr>
-                <th>Alumno</th>
+                    <th>Remitente</th>
                 <th>Problema</th>
                 <th>Estado</th>
                 <th>Acción</th>
@@ -63,7 +61,8 @@
 
         <div id="detalleTicket"></div>
 
-        <textarea id="respuesta" placeholder="Escribe la respuesta al alumno..."></textarea>
+        <!-- Nota: Oculto temporalmente ya que no hay columna en BD para respuesta -->
+        <textarea id="respuesta" placeholder="Escribe la respuesta al alumno..." style="display:none;"></textarea>
 
         <div class="acciones-modal">
             <button class="btn-proceso" onclick="cambiarEstado('proceso')">En proceso</button>
@@ -74,5 +73,6 @@
 </div>
     <script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
     <script src="/FrontEnd/JefeDepartamento/JS/Tickets.js"></script>
+    <script src="/FrontEnd/Profesor/JS/MenuDocente.js"></script>
 </body>
 </html>

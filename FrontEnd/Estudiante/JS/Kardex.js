@@ -55,16 +55,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         materiasMap.forEach(m => {
             creditosTotales += m.creditos;
-            const unidades = [m.u1, m.u2, m.u3, m.u4, m.u5, m.u6].filter(u => u !== null);
+            
+            // Limitamos estrictamente a las unidades configuradas
+            const limiteUnidades = m.unidad || m.Unidad || m.unidades || 6;
+            const unidades = [];
+            for(let i = 1; i <= limiteUnidades; i++) {
+                const val = m[`u${i}`] ?? m[`U${i}`];
+                if (val !== null && val !== undefined && val !== "") unidades.push(parseFloat(val));
+            }
+
             let final = 0;
             if (unidades.length > 0) final = Math.round(unidades.reduce((a, b) => a + b, 0) / unidades.length);
 
+            // Verificamos si la base de datos marca la materia como finalizada (estatus 2)
+            const estaTerminada = (m.idEstatus == 2 || m.id_estatus == 2 || m.estatus == 2 || m.Estatus == 2);
+
             let estado = "futura";
-            if (m.idPeriodo && m.idPeriodo === periodoFiltro) {
+             if (m.idPeriodo && m.idPeriodo === periodoFiltro && !estaTerminada) {
                 estado = "actual";
             } else if (final >= 70) {
                 estado = "aprobado";
                 creditosAcumulados += m.creditos;
+           
             } else if (m.idPeriodo) {
                 estado = "reprobado";
             }

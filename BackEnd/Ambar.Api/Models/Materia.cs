@@ -11,5 +11,6 @@ namespace Ambar.Api.Models
         public string? Temario { get; set; }
         public int? Semestre { get; set; }
         public int? ID_Especialidad { get; set; }
+        public int Unidad { get; set; } = 6;
     }
 }

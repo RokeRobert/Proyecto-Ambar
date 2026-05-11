@@ -30,7 +30,8 @@ namespace Ambar.Api.Repositories
                     m.ID_Especialidad AS IdEspecialidad,
                     ISNULL(e.Nombre_Especialidad, 'Sin Especialidad') AS NombreEspecialidad,
                     k.Seriada AS IdMateriaRequisito,
-                    ISNULL(req.Nombre_Materia, '') AS NombreMateriaRequisito
+                    ISNULL(req.Nombre_Materia, '') AS NombreMateriaRequisito,
+                    m.Unidad
                 FROM materias m
                 LEFT JOIN carreras c ON m.ID_Carrera = c.ID_Carrera
                 LEFT JOIN especialidades e ON m.ID_Especialidad = e.ID_Especialidad
@@ -46,7 +47,7 @@ namespace Ambar.Api.Repositories
         {
             string query = @"
                 DECLARE @NuevaMateria INT;
-                INSERT INTO materias (Nombre_Materia, Total_Creditos, Semestre, ID_Carrera, ID_Especialidad) VALUES (@Nombre, @Creditos, @Semestre, @IdCarrera, @IdEspecialidad);
+                INSERT INTO materias (Nombre_Materia, Total_Creditos, Semestre, ID_Carrera, ID_Especialidad, Unidad) VALUES (@Nombre, @Creditos, @Semestre, @IdCarrera, @IdEspecialidad, @Unidad);
                 SET @NuevaMateria = SCOPE_IDENTITY();
                 
                 IF @IdMateriaRequisito IS NOT NULL
@@ -59,7 +60,7 @@ namespace Ambar.Api.Repositories
         public async Task<bool> ActualizarMateriaAsync(int id, CrearMateriaDto m)
         {
             string query = @"
-                UPDATE materias SET Nombre_Materia = @Nombre, Total_Creditos = @Creditos, Semestre = @Semestre, ID_Carrera = @IdCarrera, ID_Especialidad = @IdEspecialidad WHERE ID_Materia = @Id;
+                UPDATE materias SET Nombre_Materia = @Nombre, Total_Creditos = @Creditos, Semestre = @Semestre, ID_Carrera = @IdCarrera, ID_Especialidad = @IdEspecialidad, Unidad = @Unidad WHERE ID_Materia = @Id;
                 DELETE FROM kardex WHERE ID_Materia = @Id;
                 
                 IF @IdMateriaRequisito IS NOT NULL

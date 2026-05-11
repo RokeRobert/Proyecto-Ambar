@@ -16,5 +16,6 @@ namespace Ambar.Api.DTOs
         public int? U5 { get; set; }
         public int? U6 { get; set; }
         public int PeriodoActual { get; set; }
+        public int Unidad { get; set; }
     }
 }

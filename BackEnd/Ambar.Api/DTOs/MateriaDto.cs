@@ -12,5 +12,6 @@ namespace Ambar.Api.DTOs
         public string NombreEspecialidad { get; set; } = string.Empty;
         public int? IdMateriaRequisito { get; set; }
         public string NombreMateriaRequisito { get; set; } = string.Empty;
+        public int Unidad { get; set; }
     }
 }

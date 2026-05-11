@@ -27,13 +27,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // 5. Procesar la información de la BD (Limpiar nulos y sacar promedio final)
         const materiasProcesadas = materiasPeriodoActual.map(m => {
-            // Extraer solo las unidades que el profesor ya haya calificado (no nulas)
-            const unidades = [m.u1, m.u2, m.u3, m.u4, m.u5, m.u6].filter(u => u !== null);
+            // Respetamos el límite de unidades configurado en la base de datos (por defecto 6)
+            const limiteUnidades = m.unidad || m.Unidad || m.unidades || 6;
             
+            const unidades = [];
             let final = 0;
-            if (unidades.length > 0) {
-                const suma = unidades.reduce((acc, val) => acc + val, 0);
-                final = Math.round(suma / unidades.length);
+            let suma = 0;
+            let calificadas = 0;
+
+            for (let i = 1; i <= limiteUnidades; i++) {
+                const calif = m[`u${i}`] ?? m[`U${i}`]; // Intenta leer u1 o U1 del JSON
+                if (calif !== null && calif !== undefined && calif !== "") {
+                    unidades.push(calif);
+                    suma += parseFloat(calif);
+                    calificadas++;
+                } else {
+                    unidades.push('--'); // Unidad aún no evaluada
+                }
+            }
+            
+            if (calificadas > 0) {
+                final = Math.round(suma / calificadas);
             }
 
             return {

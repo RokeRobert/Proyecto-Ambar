@@ -28,6 +28,7 @@ namespace Ambar.Api.Repositories
                 SELECT 
                     m.ID_Materia AS IdMateria, m.Nombre_Materia AS Nombre, CAST(m.ID_Materia AS VARCHAR) AS Clave,
                     ISNULL(m.Total_Creditos, 0) AS Creditos, ISNULL(m.Semestre, 1) AS Semestre,
+                    m.Unidad,
                     k.Seriada AS Requiere, g.ID_Periodo AS IdPeriodo,
                     ga.UNIDAD1 AS U1, ga.UNIDAD2 AS U2, ga.UNIDAD3 AS U3, ga.UNIDAD4 AS U4, ga.UNIDAD5 AS U5, ga.UNIDAD6 AS U6,
                     @PeriodoActual AS PeriodoActual

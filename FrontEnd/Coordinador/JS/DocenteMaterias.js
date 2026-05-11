@@ -40,7 +40,10 @@ GestionCoordinador.prototype.renderDocentesGestion = async function() {
     `;
 
     try {
-        const response = await fetch('http://localhost:5067/api/coordinador/grupos-asignacion');
+        const sesion = JSON.parse(localStorage.getItem("profesorSesion") || "{}");
+        const idCoordinador = sesion.id || 0;
+
+        const response = await fetch(`http://localhost:5067/api/coordinador/grupos-asignacion/${idCoordinador}`);
         if (!response.ok) {
             throw new Error('No se pudieron cargar los datos de los grupos.');
         }
@@ -93,7 +96,10 @@ GestionCoordinador.prototype.renderDocentesGestion = async function() {
 GestionCoordinador.prototype.abrirModalAsignacion = async function(grupo) {
     let opcionesDocentes = '';
     try {
-        const response = await fetch('http://localhost:5067/api/coordinador/docentes');
+        const sesion = JSON.parse(localStorage.getItem("profesorSesion") || "{}");
+        const idCoordinador = sesion.id || 0;
+
+        const response = await fetch(`http://localhost:5067/api/coordinador/docentes/${idCoordinador}`);
         if (!response.ok) throw new Error('No se pudo cargar la lista de docentes.');
         const docentes = await response.json();
         this.dbDocentes = docentes; // Cache for later use if needed

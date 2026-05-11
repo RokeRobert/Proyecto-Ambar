@@ -19,10 +19,13 @@ namespace Ambar.Api.Controllers
             _connection = connection;
         }
 
-        [HttpGet("grupos-asignacion")]
-        public async Task<IActionResult> GetGruposParaAsignacion()
+        [HttpGet("grupos-asignacion/{idCoordinador:int}")]
+        public async Task<IActionResult> GetGruposParaAsignacion(int idCoordinador)
         {
             var query = @"
+                DECLARE @IdRol INT;
+                SELECT @IdRol = ID_Rol FROM dbo.profesores WHERE ID_Profesor = @idCoordinador;
+
                 SELECT 
                     g.ID_Grupo AS Id,
                     CAST(g.ID_Grupo AS VARCHAR) AS Grupo,
@@ -33,25 +36,30 @@ namespace Ambar.Api.Controllers
                 JOIN dbo.materias m ON g.ID_Materia = m.ID_Materia
                 JOIN dbo.carreras c ON g.ID_Carrera = c.ID_Carrera
                 LEFT JOIN dbo.profesores p ON g.ID_Profesor = p.ID_Profesor
+                WHERE (@IdRol = 1 OR g.ID_Carrera IN (SELECT ID_Carrera FROM dbo.departamentos_carreras WHERE ID_Coordinador = @idCoordinador))
                 ORDER BY g.ID_Grupo;
             ";
 
-            var grupos = await _connection.QueryAsync<GrupoAsignacionDto>(query);
+            var grupos = await _connection.QueryAsync<GrupoAsignacionDto>(query, new { idCoordinador });
             return Ok(grupos);
         }
 
-        [HttpGet("docentes")]
-        public async Task<IActionResult> GetDocentesSimple()
+        [HttpGet("docentes/{idCoordinador:int}")]
+        public async Task<IActionResult> GetDocentesSimple(int idCoordinador)
         {
             var query = @"
+                DECLARE @IdRol INT;
+                DECLARE @IdDepto INT;
+                SELECT @IdRol = ID_Rol, @IdDepto = ID_Departamento FROM dbo.profesores WHERE ID_Profesor = @idCoordinador;
+
                 SELECT 
                     ID_Profesor as Id, 
                     Nombre + ' ' + Primer_Apellido + ' ' + Segundo_Apellido as Nombre 
                 FROM dbo.profesores 
-                WHERE ID_Estatus = 1 -- Activos
+                WHERE ID_Estatus = 1 AND (@IdRol = 1 OR ID_Departamento = @IdDepto)
                 ORDER BY Nombre;
             ";
-            var docentes = await _connection.QueryAsync<DocenteSimpleDto>(query);
+            var docentes = await _connection.QueryAsync<DocenteSimpleDto>(query, new { idCoordinador });
             return Ok(docentes);
         }
 
@@ -90,8 +98,8 @@ namespace Ambar.Api.Controllers
             }
         }
 
-        [HttpGet("alumnos/buscar")]
-        public async Task<IActionResult> BuscarAlumnos([FromQuery] string termino)
+        [HttpGet("alumnos/buscar/{idCoordinador:int}")]
+        public async Task<IActionResult> BuscarAlumnos(int idCoordinador, [FromQuery] string termino)
         {
             if (string.IsNullOrWhiteSpace(termino))
             {
@@ -100,21 +108,25 @@ namespace Ambar.Api.Controllers
 
             var searchTerm = $"%{termino}%";
             var query = @"
+                DECLARE @IdRol INT;
+                SELECT @IdRol = ID_Rol FROM dbo.profesores WHERE ID_Profesor = @idCoordinador;
+
                 SELECT 
                     a.ID_Alumno as id, 
-                    CAST(a.ID_Alumno AS VARCHAR) as Control, 
-                    a.Nombre + ' ' + a.Primer_Apellido + ' ' + ISNULL(a.Segundo_Apellido, '') as Nombre, 
-                    c.Nombre_Carrera as Carrera 
+                    CAST(a.ID_Alumno AS VARCHAR) as control, 
+                    a.Nombre + ' ' + a.Primer_Apellido + ' ' + ISNULL(a.Segundo_Apellido, '') as nombre, 
+                    c.Nombre_Carrera as carrera 
                 FROM dbo.alumnos a 
                 JOIN dbo.carreras c ON a.ID_Carrera = c.ID_Carrera 
-                WHERE a.Nombre LIKE @searchTerm 
+                WHERE (@IdRol = 1 OR a.ID_Carrera IN (SELECT ID_Carrera FROM dbo.departamentos_carreras WHERE ID_Coordinador = @idCoordinador)) AND
+                  (a.Nombre LIKE @searchTerm 
                    OR a.Primer_Apellido LIKE @searchTerm 
                    OR a.Segundo_Apellido LIKE @searchTerm
                    OR CAST(a.ID_Alumno AS VARCHAR) LIKE @searchTerm 
-                   OR c.Nombre_Carrera LIKE @searchTerm;
+                   OR c.Nombre_Carrera LIKE @searchTerm);
             ";
 
-            var alumnos = await _connection.QueryAsync(query, new { searchTerm });
+            var alumnos = await _connection.QueryAsync(query, new { idCoordinador, searchTerm });
             return Ok(alumnos);
         }
 

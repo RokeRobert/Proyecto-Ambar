@@ -55,16 +55,6 @@ class GestionCoordinador {
         }
     }
 
-    renderConfiguracionSistema() {
-        PantallasConfig.renderConfiguracion(this);
-    }
-
-    toggleSistema() {
-        this.sistemaHabilitado = !this.sistemaHabilitado;
-        this.guardarEnBD();
-        this.renderConfiguracionSistema();
-    }
-
     renderMóduloTickets() {
         this.limpiarPantalla();
         this.mainContainer.innerHTML = `<h2>Tickets de Soporte</h2><p>Módulo en desarrollo...</p>`;
@@ -91,7 +81,6 @@ function routerCoordinador() {
         switch (view) {
             case 'docentes': return coordinador.renderDocentesGestion();
             case 'alumnos': return coordinador.renderAlumnosGestion();
-            case 'config': return coordinador.renderConfiguracionSistema();
         }
     }
 }

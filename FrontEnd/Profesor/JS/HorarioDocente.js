@@ -7,6 +7,7 @@ const AppState = {
     materia: null,
     grupo: null,
     idGrupo: null, // <-- ID del grupo para las llamadas a la API
+    unidad: 6, // <-- Guardará las unidades dinámicas
     tipoEditor: null,
     itemsEditor: [],
     indiceEdicion: -1, // <--- AGREGA ESTA LÍNEA AQUÍ
@@ -62,7 +63,7 @@ function vistaHorario() {
                 const c = f[dia];
                 return c ? `
                     <td class="${c.color}">
-                        <a class="materia-card" onclick="irADetalle('${c.nombre}', '${c.grupo}', ${c.idGrupo})" style="cursor:pointer">
+                        <a class="materia-card" onclick="irADetalle('${c.nombre}', '${c.grupo}', ${c.idGrupo}, ${c.unidad})" style="cursor:pointer">
                             <span class="materia-nombre">${c.nombre}</span>
                             <div class="materia-info"><span>${c.grupo}</span></div>
                             <div class="materia-info"><span>Aula ${c.aula}</span></div>
@@ -125,6 +126,12 @@ function vistaDetalle() {
 
 // --- VISTA: EDITOR ---
 function vistaEditor() {
+    // Construimos dinámicamente las opciones del select según el límite de unidades
+    let opcionesUnidades = '<option value="todos" selected>Mostrar todas</option>';
+    for(let i = 1; i <= (AppState.unidad || 6); i++) {
+        opcionesUnidades += `<option value="${i}">Unidad ${i}</option>`;
+    }
+
     return `
         <main class="main-content">
             <div class="header-top">
@@ -136,7 +143,12 @@ function vistaEditor() {
             </div>
             <div class="card-horario">
                 <div class="form-editar">
-                    <input type="text" id="tit-edit" placeholder="Título" style="width:100%; padding:10px; margin-bottom:10px;">
+                    <div style="display:flex; gap:10px; margin-bottom:15px;">
+                        <select id="unidad-edit" onchange="renderizarListaItems()" style="width:30%; padding:12px 15px; border:1px solid #ddd; border-radius:12px; outline:none; background:white;">
+                            ${opcionesUnidades}
+                        </select>
+                        <input type="text" id="tit-edit" placeholder="Título" style="width:70%; margin-bottom:0;">
+                    </div>
                     <textarea id="cont-edit" placeholder="Contenido..." style="width:100%; height:100px; padding:10px; margin-bottom:10px;"></textarea>
                     <div class="botones-acciones" style="margin-top:10px;">
                         <button onclick="guardarDato()" style="background:#1A237E; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Guardar</button>
@@ -210,7 +222,8 @@ function transformarHorario(apiData) {
             nombre: item.nombreMateria,
             grupo: item.grupo,
             aula: item.aula,
-            color: colorMap[item.nombreMateria]
+            color: colorMap[item.nombreMateria],
+            unidad: item.unidad || 6
         };
     });
 
@@ -223,10 +236,11 @@ function cambiarVista(nuevaVista) {
     renderizarApp();
 }
 
-function irADetalle(materia, grupo, idGrupo) {
+function irADetalle(materia, grupo, idGrupo, unidad) {
     AppState.materia = materia;
     AppState.grupo = grupo;
     AppState.idGrupo = idGrupo;
+    AppState.unidad = unidad || 6;
     cambiarVista('detalle');
 }
 
@@ -272,7 +286,8 @@ async function irAEditor(tipo) {
         }
 
         const data = await response.json();
-        AppState.itemsEditor = data || [];
+        // Ordenamos los datos por unidad automáticamente al recibirlos
+        AppState.itemsEditor = (data || []).sort((a, b) => (a.unidad || 1) - (b.unidad || 1));
         renderizarListaItems(); // Renderizar la lista con los datos de la API
     } catch (error) {
         console.error('Error al cargar datos del editor:', error);
@@ -283,33 +298,75 @@ async function irAEditor(tipo) {
 
 function renderizarListaItems() {
     const lista = document.getElementById('lista-dinamica');
-    if (!lista) return;
+    const selectUnidad = document.getElementById('unidad-edit');
+    if (!lista || !selectUnidad) return;
 
-    lista.innerHTML = AppState.itemsEditor.map((item, i) => `
+    const unidadValor = selectUnidad.value;
+    const esTodos = unidadValor === 'todos';
+    const unidadSeleccionada = parseInt(unidadValor) || 1;
+
+    // Control de Interfaz (Bloquear inputs y botones si estamos en "Todos")
+    const inputTit = document.getElementById('tit-edit');
+    const inputCont = document.getElementById('cont-edit');
+    const btnGuardar = document.querySelector('.botones-acciones button[onclick="guardarDato()"]');
+    const btnBorrar = document.querySelector('.botones-acciones button[onclick="borrarDato()"]');
+
+    if (esTodos) {
+        inputTit.disabled = true;
+        inputCont.disabled = true;
+        inputTit.placeholder = "Seleccione una unidad para agregar/editar";
+        inputCont.placeholder = "Modo lectura. Seleccione una unidad específica para realizar cambios.";
+        if (btnGuardar) { btnGuardar.disabled = true; btnGuardar.style.opacity = '0.5'; btnGuardar.style.cursor = 'not-allowed'; }
+        if (btnBorrar) { btnBorrar.disabled = true; btnBorrar.style.opacity = '0.5'; btnBorrar.style.cursor = 'not-allowed'; }
+        
+        // Si estábamos editando y cambiamos a 'todos', limpiamos la memoria
+        if (AppState.indiceEdicion > -1) {
+            AppState.indiceEdicion = -1;
+            inputTit.value = '';
+            inputCont.value = '';
+        }
+    } else {
+        inputTit.disabled = false;
+        inputCont.disabled = false;
+        inputTit.placeholder = "Título";
+        inputCont.placeholder = "Contenido...";
+        if (btnGuardar) { btnGuardar.disabled = false; btnGuardar.style.opacity = '1'; btnGuardar.style.cursor = 'pointer'; }
+        if (btnBorrar) { btnBorrar.disabled = false; btnBorrar.style.opacity = '1'; btnBorrar.style.cursor = 'pointer'; }
+    }
+
+    // Mapeamos guardando el índice original y filtramos por unidad
+    const itemsFiltrados = AppState.itemsEditor
+        .map((item, index) => ({ item, originalIndex: index }))
+        .filter(obj => esTodos || (obj.item.unidad || 1) === unidadSeleccionada);
+
+    lista.innerHTML = itemsFiltrados.map(({ item, originalIndex }) => `
         <div class="fuente-item-container">
             <div class="fuente-item-header">
                 <div class="fuente-titulo-seccion">
-                    <input type="checkbox" class="check-eliminar" data-index="${i}" style="margin-right: 10px; cursor: pointer;">
+                    ${esTodos ? '' : `<input type="checkbox" class="check-eliminar" data-index="${originalIndex}" style="margin-right: 10px; cursor: pointer;">`}
+                    <span style="background:#e8f5e9; color:#2e7d32; padding:2px 8px; border-radius:10px; font-size:10px; margin-right:8px; font-weight:bold;">U${item.unidad || 1}</span>
                     <strong>${item.titulo}</strong>
                 </div>
                 <div class="fuente-acciones">
-                    <button class="btn-accion-item edit" onclick="cargarParaEditar(${i})" title="Editar">
+                    ${esTodos ? '' : `
+                    <button class="btn-accion-item edit" onclick="cargarParaEditar(${originalIndex})" title="Editar">
                         <i class='bx bx-edit-alt'></i>
-                    </button>
-                    <button class="btn-accion-item toggle" onclick="toggleAcordeon(${i})" title="Ver más">
-                        <i class='bx bx-chevron-down' id="icon-ar-bit-${i}"></i>
+                    </button>`}
+                    <button class="btn-accion-item toggle" onclick="toggleAcordeon(${originalIndex})" title="Ver más">
+                        <i class='bx bx-chevron-down' id="icon-ar-bit-${originalIndex}"></i>
                     </button>
                 </div>
             </div>
-            <div class="fuente-item-body" id="body-item-${i}">
+            <div class="fuente-item-body" id="body-item-${originalIndex}">
                 <p>${item.contenido}</p>
             </div>
         </div>
-    `).join('') || '<p style="color:gray; text-align:center;">No hay registros aún.</p>';
+    `).join('') || `<p style="color:gray; text-align:center;">No hay registros${esTodos ? '.' : ' en esta unidad.'}</p>`;
 }
 
 function cargarParaEditar(index) {
     const item = AppState.itemsEditor[index];
+    document.getElementById('unidad-edit').value = item.unidad || 1;
     document.getElementById('tit-edit').value = item.titulo;
     document.getElementById('cont-edit').value = item.contenido;
     
@@ -364,17 +421,21 @@ async function sincronizarConBD() {
 }
 
 async function guardarDato() {
+    const u = parseInt(document.getElementById('unidad-edit').value) || 1;
     const t = document.getElementById('tit-edit').value;
     const c = document.getElementById('cont-edit').value;
     
     if (!t || !c) return alert("Por favor llena los campos");
 
     if (AppState.indiceEdicion > -1) {
-        AppState.itemsEditor[AppState.indiceEdicion] = { titulo: t, contenido: c };
+        AppState.itemsEditor[AppState.indiceEdicion] = { unidad: u, titulo: t, contenido: c };
         AppState.indiceEdicion = -1;
     } else {
-        AppState.itemsEditor.push({ titulo: t, contenido: c });
+        AppState.itemsEditor.push({ unidad: u, titulo: t, contenido: c });
     }
+
+    // Re-ordenamos la lista antes de mostrarla para que se agrupen las unidades
+    AppState.itemsEditor.sort((a, b) => (a.unidad || 1) - (b.unidad || 1));
 
     // Limpiar campos del formulario
     document.getElementById('tit-edit').value = '';
@@ -429,11 +490,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Cargar datos del horario desde la API
     try {
         if (root) root.innerHTML = `<p style="text-align:center; padding: 40px;">Cargando horario...</p>`;
+        
+        // Obtenemos los grupos para conocer las unidades de cada materia
+        const resGrupos = await fetch(`http://localhost:5067/api/profesores/${profesorId}/grupos`);
+        let gruposApi = [];
+        if (resGrupos.ok) {
+            gruposApi = await resGrupos.json();
+        }
+
         const response = await fetch(`http://localhost:5067/api/profesores/${profesorId}/horario`);
         if (!response.ok) {
             throw new Error(`No se pudo cargar el horario (Error: ${response.status})`);
         }
         const horarioDataAPI = await response.json();
+
+        // Vinculamos la cantidad de unidades al horario
+        horarioDataAPI.forEach(h => {
+            const grupoInfo = gruposApi.find(g => g.idGrupo === h.idGrupo);
+            h.unidad = grupoInfo ? grupoInfo.unidad : 6;
+        });
 
         // 3. Transformar datos y guardarlos en el estado de la app
         AppState.horario = transformarHorario(horarioDataAPI);

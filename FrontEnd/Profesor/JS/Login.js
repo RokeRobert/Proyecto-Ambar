@@ -47,10 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     if (rol === "administrador" || rol === "jefe de departamento") {
                         window.location.href = "/FrontEnd/JefeDepartamento/HTML/HomeAdmin.html";
-                    } else if (rol === "coordinador") {
-                        window.location.href = "/FrontEnd/Coordinador/HTML/GestionCoordinador.html";
                     } else {
-                        // Si es rol Docente o cualquier otro
+                        // Coordinadores y Docentes van directamente a su Perfil
                         window.location.href = "/FrontEnd/Profesor/HTML/PerfilDocente.html"; 
                     }
                 } else {

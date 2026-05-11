@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/FrontEnd/JefeDepartamento/CSS/Semaforo.css">
+    <link rel="stylesheet" href="/FrontEnd/Profesor/CSS/MenuDocente.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Semáforo de Inscripciones</title>
+</head>
+<body>
+
+<main class="main-content">
+    <div id="topbar"></div>
+
+    <div class="semaforo-admin">
+        <div class="page-header">
+            <div>
+                <h2>Semáforo de Inscripciones</h2>
+                <p style="color: #666;">Control maestro de turnos y fechas de inscripción.</p>
+            </div>
+            <button class="btn-agregar" onclick="abrirModalTurno()">+ Nuevo Turno</button>
+        </div>
+
+        <table class="tabla-semaforo">
+            <thead>
+                <tr>
+                    <th>Carrera</th>
+                    <th>Semestre</th>
+                    <th>Apertura</th>
+                    <th>Cierre</th>
+                    <th>Estado</th>
+                    <th class="acciones-col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-turnos">
+                <tr><td colspan="6" style="text-align:center;">Cargando turnos...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- MODAL NUEVO TURNO -->
+<div class="modal" id="modalTurno">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="color:#0b2a4a;">Programar Turno</h3>
+            <button class="cerrar" onclick="cerrarModalTurno()">✕</button>
+        </div>
+        <div class="modal-body" id="cuerpo-modal-turnos">
+            <!-- Inyectado por JS -->
+        </div>
+        <div class="acciones-modal">
+            <button class="btn-guardar" onclick="guardarTurno()">Guardar</button>
+            <button class="btn-cancelar" onclick="cerrarModalTurno()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="/FrontEnd/JefeDepartamento/JS/Admin.js"></script>
+<script src="/FrontEnd/Profesor/JS/MenuDocente.js"></script>
+<script src="/FrontEnd/JefeDepartamento/JS/Semaforo.js"></script>
+</body>
+</html>

@@ -18,6 +18,10 @@ builder.Services.AddScoped<ICargaMateriasRepository, CargaMateriasRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<ICreditoRepository, CreditoRepository>();
 builder.Services.AddScoped<IReciboRepository, ReciboRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IMateriaRepository, MateriaRepository>();
+builder.Services.AddScoped<IEspecialidadRepository, EspecialidadRepository>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 
 // 2. Agregar soporte para Controladores REST
 builder.Services.AddControllers();
