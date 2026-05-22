@@ -4,6 +4,7 @@ let paginaActual = 1;
 const itemsPorPagina = 8;
 let editId = null;
 let idEliminar = null;
+let carrerasGlobal = [];
 
 document.addEventListener("DOMContentLoaded", () => {
     cargarFiltros();
@@ -11,6 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("busquedaUsuario").addEventListener("input", filtrar);
     document.getElementById("filtroRol").addEventListener("change", filtrar);
     document.getElementById("filtroDepartamento").addEventListener("change", filtrar);
+    
+    // Agregamos eventos para actualizar el formulario dinámicamente
+    const selectRol = document.getElementById("pr_rol");
+    if (selectRol) selectRol.addEventListener("change", cambiarRolProfesor);
+    
+    const selectDepto = document.getElementById("pr_departamento");
+    if (selectDepto) selectDepto.addEventListener("change", cambiarRolProfesor);
 });
 
 async function cargarFiltros() {
@@ -30,12 +38,7 @@ async function cargarFiltros() {
 
         const resC = await fetch("http://localhost:5067/api/usuarios/carreras");
         if (resC.ok) {
-            const carreras = await resC.json();
-            let opcionesForm = '<option value="">Seleccione una carrera</option>';
-            carreras.forEach(c => {
-                opcionesForm += `<option value="${c.id}">${c.nombre}</option>`;
-            });
-            document.getElementById("pr_carrera").innerHTML = opcionesForm;
+            carrerasGlobal = await resC.json();
         }
     } catch(e) { console.error(e); }
 }
@@ -139,11 +142,34 @@ window.generarCorreoProfesor = function() {
 }
 
 window.cambiarRolProfesor = function() {
+    const idRol = document.getElementById("pr_rol").value;
+    const idDepto = document.getElementById("pr_departamento").value;
     const contCarrera = document.getElementById("pr_carrera_container");
-    // Ya no requerimos seleccionar carrera manualmente, C# lo cruza con el Departamento
-    if (contCarrera) { contCarrera.style.display = "none"; }
     const selectCarrera = document.getElementById("pr_carrera");
-    if (selectCarrera) { selectCarrera.value = ""; }
+    
+    if (contCarrera) {
+        if (idRol == "2") { // 2 = Coordinador
+            contCarrera.style.display = "block";
+            
+            if (selectCarrera) {
+                let opciones = '<option value="">Seleccione una carrera</option>';
+                
+                if (!idDepto) {
+                    opciones = '<option value="">Seleccione un departamento primero</option>';
+                } else {
+                    // Filtramos mostrando las del departamento seleccionado o las que aún no tienen uno asignado
+                    const carrerasFiltradas = carrerasGlobal.filter(c => c.idDepartamento == idDepto || c.idDepartamento == null);
+                    carrerasFiltradas.forEach(c => {
+                        opciones += `<option value="${c.id}">${c.nombre}</option>`;
+                    });
+                }
+                selectCarrera.innerHTML = opciones;
+            }
+        } else {
+            contCarrera.style.display = "none";
+            if (selectCarrera) { selectCarrera.value = ""; }
+        }
+    }
 }
 
 window.guardarUsuario = async function() {
@@ -158,6 +184,10 @@ window.guardarUsuario = async function() {
         idRol: idRol,
         contrasena: document.getElementById("pr_pass").value || "temporal123"
     };
+    
+    if (idRol === 2) {
+        dto.idCarrera = parseInt(document.getElementById("pr_carrera").value) || null;
+    }
 
     const url = editId ? `http://localhost:5067/api/usuarios/profesor/${editId}` : `http://localhost:5067/api/usuarios/profesor`;
     const method = editId ? "PUT" : "POST";
@@ -184,10 +214,15 @@ window.editarUsuario = async function(id) {
             document.getElementById("pr_departamento").value = p.idDepartamento;
             document.getElementById("pr_rol").value = p.idRol;
             
-            const selectCarrera = document.getElementById("pr_carrera");
-            if(selectCarrera) selectCarrera.value = "";
             document.getElementById("pr_pass").value = ""; 
             cambiarRolProfesor();
+            
+            // Asignamos la carrera después de que se generan las opciones en cambiarRolProfesor()
+            if (p.idRol == 2 && p.idCarrera) {
+                const selectCarrera = document.getElementById("pr_carrera");
+                if (selectCarrera) selectCarrera.value = p.idCarrera;
+            }
+            
             document.getElementById("modalUsuario").style.display = "flex";
         }
     } catch(e) { console.error(e); }

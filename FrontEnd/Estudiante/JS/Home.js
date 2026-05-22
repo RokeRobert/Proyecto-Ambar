@@ -144,10 +144,6 @@ function inicializarTabs() {
 // 5. FUNCIONALIDAD DE MODALES
 // ==========================================
 function inicializarEventos() {
-    const btnLogout = document.querySelector(".logout");
-    if (btnLogout) {
-        btnLogout.addEventListener("click", () => document.getElementById("modalLogout").style.display = "flex");
-    }
 
     const API_BASE_URL = 'http://localhost:5067';
     const sesionJSON = localStorage.getItem("alumnoSesion");
@@ -225,8 +221,6 @@ function inicializarEventos() {
         });
     }
 }
-window.cerrarLogout = () => document.getElementById("modalLogout").style.display = "none";
-window.ejecutarLogout = () => window.location.href = "Login.html";
 window.abrirPassword = () => document.getElementById("modalPassword").style.display = "flex";
 window.cerrarPassword = () => { 
     document.getElementById("modalPassword").style.display = "none"; 
@@ -242,10 +236,4 @@ window.togglePass = function(id, icon) {
     if(input.type === "password") { input.type = "text"; icon.setAttribute("data-lucide", "eye-off"); } 
     else { input.type = "password"; icon.setAttribute("data-lucide", "eye"); }
     lucide.createIcons(); // Recarga el icono
-}
-
-// CERRAR SESIÓN REAL
-window.ejecutarLogout = () => {
-    localStorage.removeItem("alumnoSesion"); // Borramos la memoria
-    window.location.href = "Login.html"; // Lo sacamos del sistema
 }

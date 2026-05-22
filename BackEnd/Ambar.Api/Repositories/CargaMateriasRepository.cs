@@ -56,8 +56,8 @@ namespace Ambar.Api.Repositories
         public async Task<IEnumerable<GrupoDisponibleDto>> GetMateriasDisponiblesAsync(int idAlumno, int idPeriodo)
         {
             string query = @"
-                DECLARE @IdCarrera INT;
-                SELECT @IdCarrera = ID_Carrera FROM alumnos WHERE ID_Alumno = @IdAlumno;
+                DECLARE @IdCarrera INT, @IdEspecialidad INT;
+                SELECT @IdCarrera = ID_Carrera, @IdEspecialidad = ID_Especialidad FROM alumnos WHERE ID_Alumno = @IdAlumno;
 
                 -- 1. Calculamos las materias que el alumno ya aprobó (Promedio >= 70)
                 WITH Promedios AS (
@@ -105,7 +105,9 @@ namespace Ambar.Api.Repositories
                   -- REGLA 1: No mostrar materias que ya aprobó históricamente
                   AND m.ID_Materia NOT IN (SELECT ID_Materia FROM MateriasAprobadas)
                   -- REGLA 2: Si tiene seriación (candado), el requisito debe estar en la lista de aprobadas
-                  AND (k.Seriada IS NULL OR k.Seriada IN (SELECT ID_Materia FROM MateriasAprobadas))";
+                  AND (k.Seriada IS NULL OR k.Seriada IN (SELECT ID_Materia FROM MateriasAprobadas))
+                  -- REGLA 3: Mostrar solo materias de Tronco Común o que coincidan con la Especialidad del Alumno
+                  AND (m.ID_Especialidad IS NULL OR m.ID_Especialidad = @IdEspecialidad)";
                 
             return await _connection.QueryAsync<GrupoDisponibleDto>(query, new { IdAlumno = idAlumno, IdPeriodo = idPeriodo });
         }

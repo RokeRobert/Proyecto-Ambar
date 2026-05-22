@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     // 1. Proteger la pantalla con la sesión
     const sesion = localStorage.getItem("profesorSesion");
     if (!sesion) {
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Cargar datos al abrir la página
+    await cargarCarrerasFiltro();
     cargarDashboard();
 });
 
@@ -22,6 +23,23 @@ window.filtrarDashboard = function() {
     // Se dispara cuando cambias el select de carrera
     cargarDashboard();
 };
+
+async function cargarCarrerasFiltro() {
+    try {
+        const res = await fetch("http://localhost:5067/api/usuarios/carreras");
+        if (res.ok) {
+            const carreras = await res.json();
+            const select = document.getElementById("filtroCarrera");
+            let opciones = '<option value="">Todas las Carreras</option>';
+            carreras.forEach(c => {
+                opciones += `<option value="${c.id}">${c.nombre}</option>`;
+            });
+            if(select) select.innerHTML = opciones;
+        }
+    } catch (e) {
+        console.error("Error al cargar las carreras:", e);
+    }
+}
 
 async function cargarDashboard() {
     const carrera = document.getElementById("filtroCarrera").value;

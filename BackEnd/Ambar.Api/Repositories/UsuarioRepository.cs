@@ -100,7 +100,11 @@ namespace Ambar.Api.Repositories
 
         public async Task<IEnumerable<FiltroCarreraDto>> GetCarrerasAsync()
         {
-            string query = "SELECT ID_Carrera AS Id, Nombre_Carrera AS Nombre FROM carreras ORDER BY Nombre_Carrera ASC";
+            string query = @"
+                SELECT c.ID_Carrera AS Id, c.Nombre_Carrera AS Nombre, dc.ID_Departamento AS IdDepartamento
+                FROM carreras c
+                LEFT JOIN departamentos_carreras dc ON c.ID_Carrera = dc.ID_Carrera
+                ORDER BY c.Nombre_Carrera ASC";
             return await _connection.QueryAsync<FiltroCarreraDto>(query);
         }
 

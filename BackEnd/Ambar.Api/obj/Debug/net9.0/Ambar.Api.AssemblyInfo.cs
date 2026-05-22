@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ambar.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9ad274d3c4a48cb908faec55e54bc1883f7bbf7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be534c5ef791c6accd8e351858d518616f49b7d8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ambar.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ambar.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -55,7 +55,7 @@ function filtrar() {
     let busqueda = document.getElementById("busqueda").value.toLowerCase();
 
     datosFiltrados = creditosGlobal.filter(c => {
-        let esDeTab = tabActual === 'pendiente' ? (c.idEstatus === 1) : (c.idEstatus === 2 || c.idEstatus === 3);
+        let esDeTab = tabActual === 'pendiente' ? (c.idEstatus === 2) : (c.idEstatus === 1 || c.idEstatus === 3);
         let carreraItem = c.carrera ? c.carrera.toLowerCase() : "";
         
         return esDeTab &&
@@ -96,13 +96,13 @@ function renderTabla(lista) {
     }
 
     lista.forEach(item => {
-        let badgeText = item.idEstatus === 1 ? 'Por revisar' : (item.idEstatus === 2 ? 'Aprobado' : 'Rechazado');
-        let colorBadge = item.idEstatus === 1 ? '#ea580c' : (item.idEstatus === 2 ? '#1bbf5c' : '#e53935');
-        let bgBadge = item.idEstatus === 1 ? '#ffedd5' : (item.idEstatus === 2 ? '#e8f5e9' : '#ffebee');
+        let badgeText = item.idEstatus === 2 ? 'Por revisar' : (item.idEstatus === 1 ? 'Aprobado' : 'Rechazado');
+        let colorBadge = item.idEstatus === 2 ? '#ea580c' : (item.idEstatus === 1 ? '#1bbf5c' : '#e53935');
+        let bgBadge = item.idEstatus === 2 ? '#ffedd5' : (item.idEstatus === 1 ? '#e8f5e9' : '#ffebee');
 
         let botones = `<button class="btn-icon ver" onclick="abrirPDF('${item.rutaPdf}')" title="Ver Documento"><i data-lucide="eye"></i></button>`;
         
-        if (item.idEstatus === 1) {
+        if (item.idEstatus === 2) {
             botones += `
                 <button class="btn-icon aprobar" onclick="aprobarCredito(${item.idAlumno}, ${item.idActividad})" title="Aprobar"><i data-lucide="check"></i></button>
                 <button class="btn-icon eliminar" onclick="abrirRechazo(${item.idAlumno}, ${item.idActividad})" title="Rechazar"><i data-lucide="x"></i></button>
@@ -169,7 +169,7 @@ window.confirmarRechazo = async function() {
 
 window.aprobarCredito = async function(idAlumno, idActividad) {
     if(!confirm("¿Seguro que deseas dar este crédito por validado?")) return;
-    await cambiarEstatusCredito(idAlumno, idActividad, 2);
+    await cambiarEstatusCredito(idAlumno, idActividad, 1);
 }
 
 async function cambiarEstatusCredito(idAlumno, idActividad, estatus) {
@@ -181,7 +181,7 @@ async function cambiarEstatusCredito(idAlumno, idActividad, estatus) {
         });
 
         if (res.ok) {
-            alert(estatus === 2 ? "Crédito validado con éxito." : "Crédito rechazado.");
+            alert(estatus === 1 ? "Crédito validado con éxito." : "Crédito rechazado.");
             await cargarCreditos();
         } else { alert("Error al actualizar el crédito."); }
     } catch (e) { console.error(e); }
